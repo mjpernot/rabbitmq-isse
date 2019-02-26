@@ -144,7 +144,6 @@ class UnitTest(unittest.TestCase):
         mock_date.now.return_value = "(2019, 2, 26, 12, 40, 50, 852147)"
         mock_date.strftime.return_value = self.dtg
 
-
         cfg_mod = rmq_2_isse.validate_create_settings(self.cfg)
 
         self.assertEqual(
