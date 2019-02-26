@@ -108,14 +108,14 @@ class UnitTest(unittest.TestCase):
                 """
 
                 self.max_resend = 3
-                self.proc_file = "Process_File.txt"
-                self.isse_dir = "ISSE_Directory"
+                self.proc_file = "files_processed"
+                self.isse_dir = "/ISSE_DIR_PATH"
 
-        self.CT = CfgTest()
+        self.cfg = CfgTest()
 
         self.method = "Method Properties"
         self.body = "File1.txt"
-        self.RQ = "RabbitMQ Instance"
+        self.rq = "RabbitMQ Instance"
 
     @mock.patch("rmq_2_isse.gen_class.Logger")
     def test_empty_line_body(self, mock_log):
@@ -133,7 +133,7 @@ class UnitTest(unittest.TestCase):
 
         self.body = ""
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     @mock.patch("rmq_2_isse.non_proc_msg")
@@ -153,10 +153,10 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_log.return_value = True
-        mock_cnt.return_value = self.CT.max_resend + 1
+        mock_cnt.return_value = self.cfg.max_resend + 1
         mock_msg.return_value = True
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     @mock.patch("rmq_2_isse.non_proc_msg")
@@ -177,12 +177,12 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_log.return_value = True
-        mock_cnt.return_value = self.CT.max_resend + 1
+        mock_cnt.return_value = self.cfg.max_resend + 1
         mock_msg.return_value = True
 
         self.body = "File1.txt File2.txt"
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     @mock.patch("rmq_2_isse.non_proc_msg")
@@ -202,12 +202,12 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_log.return_value = True
-        mock_cnt.return_value = self.CT.max_resend + 1
+        mock_cnt.return_value = self.cfg.max_resend + 1
         mock_msg.return_value = True
 
         self.body = "File1.txt\nFile2.txt"
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     @mock.patch("rmq_2_isse.non_proc_msg")
@@ -227,12 +227,12 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_log.return_value = True
-        mock_cnt.return_value = self.CT.max_resend + 1
+        mock_cnt.return_value = self.cfg.max_resend + 1
         mock_msg.return_value = True
 
         self.body = "File1.txt\nFile2.txt File3.txt"
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     @mock.patch("rmq_2_isse.is_valid_msg")
@@ -259,7 +259,7 @@ class UnitTest(unittest.TestCase):
         mock_msg.return_value = True
         mock_valid.return_value = False
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     @mock.patch("rmq_2_isse.is_valid_msg")
@@ -286,7 +286,7 @@ class UnitTest(unittest.TestCase):
         mock_msg.return_value = True
         mock_valid.return_value = False
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     @mock.patch("rmq_2_isse.is_valid_msg")
@@ -308,12 +308,12 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_log.return_value = True
-        mock_lib.file_search_cnt.return_value = self.CT.max_resend
+        mock_lib.file_search_cnt.return_value = self.cfg.max_resend
         mock_lib.gen_libs.write_file.return_value = True
         mock_msg.return_value = True
         mock_valid.return_value = False
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     @mock.patch("rmq_2_isse.non_proc_msg")
@@ -334,11 +334,11 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_log.return_value = True
-        mock_lib.file_search_cnt.return_value = self.CT.max_resend + 1
+        mock_lib.file_search_cnt.return_value = self.cfg.max_resend + 1
         mock_lib.gen_libs.write_file.return_value = True
         mock_msg.return_value = True
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     @mock.patch("rmq_2_isse.is_valid_msg")
@@ -365,7 +365,7 @@ class UnitTest(unittest.TestCase):
         mock_msg.return_value = True
         mock_valid.return_value = False
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     @mock.patch("rmq_2_isse.find_files")
@@ -396,7 +396,7 @@ class UnitTest(unittest.TestCase):
         mock_valid.return_value = True
         mock_find.return_value = []
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     @mock.patch("rmq_2_isse.find_files")
@@ -428,7 +428,7 @@ class UnitTest(unittest.TestCase):
         mock_valid.return_value = True
         mock_find.return_value = []
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     @mock.patch("rmq_2_isse.is_valid_name")
@@ -463,7 +463,7 @@ class UnitTest(unittest.TestCase):
         mock_lib.gen_libs.write_file.return_value = True
         mock_name.return_value = True
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     @mock.patch("rmq_2_isse.find_files")
@@ -494,7 +494,7 @@ class UnitTest(unittest.TestCase):
         mock_valid.return_value = True
         mock_find.return_value = []
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     @mock.patch("rmq_2_isse.is_valid_name")
@@ -521,14 +521,14 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_log.return_value = True
-        mock_lib.gen_libs.file_search_cnt.return_value = 0
+        mock_lib.file_search_cnt.return_value = 0
         mock_valid.return_value = True
         mock_find.return_value = ["File1.txt"]
         mock_ext.return_value = False
         mock_lib.gen_libs.write_file.return_value = True
         mock_name.return_value = True
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     @mock.patch("rmq_2_isse.is_valid_name")
@@ -556,14 +556,14 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_log.return_value = True
-        mock_lib.gen_libs.file_search_cnt.return_value = 0
+        mock_lib.file_search_cnt.return_value = 0
         mock_valid.return_value = True
         mock_find.return_value = ["File1.txt", "File2.txt"]
         mock_ext.return_value = False
         mock_lib.gen_libs.write_file.return_value = True
         mock_name.return_value = True
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     @mock.patch("rmq_2_isse.is_valid_name")
@@ -591,14 +591,14 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_log.return_value = True
-        mock_lib.gen_libs.file_search_cnt.return_value = 0
+        mock_lib.file_search_cnt.return_value = 0
         mock_valid.return_value = True
         mock_find.return_value = ["File1.txt"]
         mock_ext.return_value = False
         mock_lib.gen_libs.write_file.return_value = True
         mock_name.return_value = True
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     @mock.patch("rmq_2_isse.is_valid_name")
@@ -625,7 +625,7 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_log.return_value = True
-        mock_lib.gen_libs.file_search_cnt.return_value = 0
+        mock_lib.file_search_cnt.return_value = 0
         mock_valid.return_value = True
         mock_find.return_value = ["File1.txt"]
         mock_ext.return_value = True
@@ -633,7 +633,7 @@ class UnitTest(unittest.TestCase):
         mock_lib.gen_libs.cp_file2.return_value = True
         mock_name.return_value = True
 
-        self.assertFalse(rmq_2_isse.process_msg(self.RQ, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
 
     def tearDown(self):
@@ -647,7 +647,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.CT = None
+        pass
 
 
 if __name__ == "__main__":
