@@ -30,6 +30,7 @@ pipeline {
                 ./test/unit/rmq_2_isse/validate_create_settings.py
                 ./test/unit/rmq_2_isse/run_program.py
                 ./test/unit/rmq_2_isse/main.py
+                ./test/unit/daemon_rmq_2_isse/main.py
                 deactivate
                 rm -rf test_env
                 """
