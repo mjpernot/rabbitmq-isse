@@ -18,6 +18,7 @@ pipeline {
                 virtualenv test_env
                 source test_env/bin/activate
                 pip2 install mock --user
+                pip2 install pika --user
                 ./test/unit/rmq_2_isse/help_message.py
                 ./test/unit/rmq_2_isse/non_proc_msg.py
                 ./test/unit/rmq_2_isse/monitor_queue.py
