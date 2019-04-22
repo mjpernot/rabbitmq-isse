@@ -20,7 +20,7 @@ coverage run -a --source=rmq_2_isse test/unit/rmq_2_isse/process_msg.py
 coverage run -a --source=rmq_2_isse test/unit/rmq_2_isse/validate_create_settings.py
 coverage run -a --source=rmq_2_isse test/unit/rmq_2_isse/run_program.py
 coverage run -a --source=rmq_2_isse test/unit/rmq_2_isse/main.py
-coverage run -a --source=rmq_2_isse test/unit/daemon_rmq_2_isse/main.py
+coverage run -a --source=daemon_rmq_2_isse test/unit/daemon_rmq_2_isse/main.py
 
 echo ""
 echo "Producing code coverage report"
