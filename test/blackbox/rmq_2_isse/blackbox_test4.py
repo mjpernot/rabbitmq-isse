@@ -124,7 +124,6 @@ def main():
     Description:  Control the blackbox testing of rmq_2_isse.py program.
 
     Variables:
-        status -> True|False - If connection to RabbitMQ was created.
         base_dir -> Directory path to blackbox testing directory.
         test_path -> Current full directory path, including base_dir.
         isse_path -> Directory path to simulated ISSE Guard directory.
@@ -145,7 +144,6 @@ def main():
 
     if not rq:
         print("Error:  Failed to create RabbitMQ Publisher instance")
-        status = False
 
     else:
         test_1(rq, isse_path)
