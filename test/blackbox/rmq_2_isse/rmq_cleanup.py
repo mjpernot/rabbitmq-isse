@@ -87,9 +87,9 @@ def rmq_cleanup(cfg, queue_name, drop_exch=False):
 
 def _drop_queue(rq, drop_exch, connect_status):
 
-    """Function:  rmq_cleanup
+    """Function:  _drop_queue
 
-    Description:  Cleanup RabbitMQ exchanges and queues.
+    Description:  Private function for rmq_cleanup.
 
     Arguments:
         (input) rq -> RabbitMQ instance.
