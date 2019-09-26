@@ -8,7 +8,7 @@
 
     Usage:  blackbox_cleanup.py
 
-    Arguments:  None
+    Arguments:
 
 """
 
@@ -25,7 +25,6 @@ import glob
 sys.path.append(os.getcwd())
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -70,10 +69,8 @@ def main():
     Description:  Controls flow of program.
 
     Variables:
-        None
 
     Arguments:
-        None
 
     """
 
