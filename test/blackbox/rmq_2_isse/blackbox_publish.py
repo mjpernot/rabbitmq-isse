@@ -9,7 +9,6 @@
         test/blackbox/rmq_2_isse/blackbox_publish.py
 
     Arguments:
-        None
 
 """
 
@@ -28,7 +27,6 @@ import rabbit_lib.rabbitmq_class as rabbitmq_class
 import lib.gen_libs as gen_libs
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -40,36 +38,34 @@ def create_rq_pub(cfg, **kwargs):
 
     Arguments:
         (input) cfg -> Configuration settings module for the program.
-        (output) RQ -> RabbitMQ Publisher instance
-        (input) **kwargs:
-            None
+        (output) rq -> RabbitMQ Publisher instance
 
     """
 
-    RQ = rabbitmq_class.RabbitMQPub(cfg.user, cfg.passwd, cfg.host, cfg.port,
+    rq = rabbitmq_class.RabbitMQPub(cfg.user, cfg.passwd, cfg.host, cfg.port,
                                     cfg.exchange_name, cfg.exchange_type,
                                     cfg.queue_name, cfg.queue_name,
                                     cfg.x_durable, cfg.q_durable,
                                     cfg.auto_delete)
 
-    connect_status, err_msg = RQ.create_connection()
+    connect_status, err_msg = rq.create_connection()
 
-    if connect_status and RQ.channel.is_open:
-        return RQ
+    if connect_status and rq.channel.is_open:
+        return rq
 
     else:
         print("Error:  Failed to connect to RabbitMQ as Publisher.")
         return None
 
 
-def publish_message(RQ, f_name, **kwargs):
+def publish_message(rq, f_name, **kwargs):
 
     """Function:  publish_message
 
     Description:  Publish a message to RabbitMQ queue.
 
     Arguments:
-        (input) RQ -> RabbitMQ Publisher instance
+        (input) rq -> RabbitMQ Publisher instance
         (input) f_name ->  File name of test file.
         (input) **kwargs:
             None
@@ -81,7 +77,7 @@ def publish_message(RQ, f_name, **kwargs):
     status = True
     err_msg = None
 
-    if not RQ.publish_msg(f_name):
+    if not rq.publish_msg(f_name):
         err_msg = "\tError:  Failed to publish message to RabbitMQ."
         status = False
 
@@ -128,7 +124,6 @@ def main():
         config_path -> Directory path to config, including test_path.
 
     Arguments:
-        None
 
     """
 
@@ -138,13 +133,13 @@ def main():
 
     cfg = gen_libs.load_module("rabbitmq", config_path)
 
-    RQ = create_rq_pub(cfg)
+    rq = create_rq_pub(cfg)
 
-    if not RQ:
+    if not rq:
         print("Error:  Failed to create RabbitMQ Publisher instance")
 
     else:
-        publish(RQ)
+        publish(rq)
 
 
 if __name__ == "__main__":
