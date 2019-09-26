@@ -99,10 +99,7 @@ def publish(rq, **kwargs):
 
     status, err_msg = publish_message(rq, f_name)
 
-    if status:
-        pass
-
-    else:
+    if not status:
         print(err_msg)
         print("\tPublish failed\n")
 
