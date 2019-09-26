@@ -9,7 +9,6 @@
         test/blackbox/rmq_2_isse/blackbox_test2.py
 
     Arguments:
-        None
 
 """
 
@@ -26,7 +25,6 @@ import time
 sys.path.append(os.getcwd())
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -38,8 +36,6 @@ def test_1(isse_path, **kwargs):
 
     Arguments:
         (input) isse_path ->  Directory path to the ISSE Guard directory.
-        (input) **kwargs:
-            None
 
     """
 
@@ -69,7 +65,6 @@ def main():
         isse_path -> Directory path to simulated ISSE Guard directory.
 
     Arguments:
-        None
 
     """
 
