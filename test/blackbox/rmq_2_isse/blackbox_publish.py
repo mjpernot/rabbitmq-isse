@@ -67,8 +67,6 @@ def publish_message(rq, f_name, **kwargs):
     Arguments:
         (input) rq -> RabbitMQ Publisher instance
         (input) f_name ->  File name of test file.
-        (input) **kwargs:
-            None
         (output) status -> True|False - Success of the test.
         (output) err_msg -> Error message or None.
 
@@ -94,8 +92,6 @@ def publish(RQ, **kwargs):
 
     Arguments:
         (input) RQ -> RabbitMQ Publisher instance
-        (input) **kwargs:
-            None
 
     """
 
