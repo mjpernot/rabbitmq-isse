@@ -84,20 +84,20 @@ def publish_message(rq, f_name, **kwargs):
     return status, err_msg
 
 
-def publish(RQ, **kwargs):
+def publish(rq, **kwargs):
 
     """Function:  publish
 
     Description:  Publish test message to RabbitMQ queue.
 
     Arguments:
-        (input) RQ -> RabbitMQ Publisher instance
+        (input) rq -> RabbitMQ Publisher instance
 
     """
 
     f_name = "file13"
 
-    status, err_msg = publish_message(RQ, f_name)
+    status, err_msg = publish_message(rq, f_name)
 
     if status:
         pass
