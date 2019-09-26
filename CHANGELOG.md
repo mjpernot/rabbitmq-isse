@@ -11,7 +11,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - non_proc_msg:  Removed "create_body" call as it is done internally in the class.
 
 ### Fixed
-- non_proc_msg:  Changed "*kwargs" to "**kwargs".
+- non_proc_msg:  Changed "\*kwargs" to "\*\*kwargs".
 
 
 ## [0.3.5] - 2018-05-21
