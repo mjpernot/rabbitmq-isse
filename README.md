@@ -13,7 +13,6 @@
   * Running
   * Program Description
   * Program Help Function
-  * Help Message
   * Testing
     - Unit
     - Integration
@@ -169,15 +168,12 @@ Stopping the program.
 ```
 
 
-# Program Description:
-### Program:  rmq_2_isse.py
-##### Description:  Process a RabbitMQ message and send it to the ISSE Guard Transfer program.
+# Program Descriptions:
+### Program:  rmq_2_isse.py:  Process a RabbitMQ message and send it to the ISSE Guard Transfer program.
 
-### Program:  daemon_rmq_2_isse.py
-##### Description:  Runs the rmq_2_isse program as a daemon/service.
+### Program:  daemon_rmq_2_isse.py:  Runs the rmq_2_isse program as a daemon/service.
 
-### Program:  rmq_2_isse_service.sh
-##### Description:  Init script for use with the Linux service command.
+### Program:  rmq_2_isse_service.sh:  Init script for use with the Linux service command.
 
 
 # Program Help Function:
@@ -188,105 +184,6 @@ Stopping the program.
 ```
 {Python_Project}/rabbitmq-isse/rmq_2_isse.py -h
 ```
-
-
-# Help Message:
-  Below is the help message for the program.  Recommend running the -h option on the command line to see the latest help message.
-
-    Program:  rmq_2_isse.py
-
-    Description:  Process a RabbitMQ message, locate the document referenced
-        in the message and copy the document to the ISSE review directory.
-
-    Usage:
-        rmq_2_isse.py -c file -d path/config [-M] [-v | -h]
-
-    Arguments:
-        -M => Monitor and process messages from a RabbitMQ queue.
-        -c file => ISSE Guard configuration file.  Required argument.
-        -d dir path => Directory path for option '-c'.  Required argument.
-        -v => Display version of this program.
-        -h => Help and usage message.
-
-        NOTE 1:  -v or -h overrides all other options.
-
-    Notes:
-        The option to monitor the RabbitMQ is setup to run in an infinite loop
-        and can only be killed with a CTRL-C on the command line or shutdown of
-        the service.
-        
-        The configuration file below is required to run this program.  Create
-        them and replace those variables (i.e. <VARIABLE>) with a value.
-
-        Configuration file format (rabbitmq.py).  The configuration file format
-        is for the initial environment setup for the program.
-
-            # RabbitMQ Configuration file
-            # Classification (U)
-            # Unclassified until filled.
-            user = "USER"
-            passwd = "PASSWORD"
-            host = "HOSTNAME"
-            # RabbitMQ Exchange name being monitored.
-            exchange_name = "EXCHANGE_NAME"
-            # RabbitMQ Queue name being monitored.
-            queue_name = "QUEUE_NAME"
-            # Email address(es) to send non-processed messages to or None.
-            # None state no emails are required to be sent.
-            to_line = "EMAIL_ADDRESS@DOMAIN_NAME"
-            # Base path and transfer directory for searching.
-            transfer_dir = "BASE_PATH/SEARCH_DIR"
-            # Base path and ISSE review directory.
-            isse_dir = "BASE_PATH/ISSE_DIR"
-            # File search criteria.
-            # File name must contain one of the strings in the list to be processed.
-            # Example:  file_filter = ["SCI-CW", "GEN-CW", "GEN-RELN"]
-            # NOTE: If list is empty, all files will be processed.
-            file_filter = []
-            # Number of months to search in the past.
-            # 0 (zero) means only search current month.
-            delta_month = 6
-            # RabbitMQ listening port, default is 5672.
-            port = 5672
-            # Type of exchange:  direct, topic, fanout, headers
-            exchange_type = "direct"
-            # Is exchange durable: True|False
-            x_durable = True
-            # Are queues durable: True|False
-            q_durable = True
-            # Queues automatically delete message after processing: True|False
-            auto_delete = False
-            # Archive directory name for non-processed messages.
-            message_dir = "message_dir"
-            # Directory name for log files.
-            log_dir = "logs"
-            # File name to program log.
-            log_file = "rmq_2_isse.log"
-            # File name to processed file log.
-            proc_file = "files_processed"
-            # Do not transfer the base64 file, only the original file.
-            # Extensions must match what is in isse_guard_class.Isse_Guard.
-            ignore_ext = ["_kmz.64.txt", "_pptx.64.txt"]
-
-    Example:
-        rmq_2_isse.py -c rabbitmq -d config -M
-
-
-    Program:  daemon_rmq_2_isse.py
-
-    Description:  Runs the rmq_2_isse program as a daemon/service.
-
-    Usage:
-        daemon_rmq_2_isse.py -a {start|stop|restart} {rmq_2_isse options}
-
-    Arguments:
-        -a {start|stop|restart} => Start, stop, restart the rmq_2_isse daemon.
-        rmq_2_isse options => See rmq_2_isse for options.
-            -c module option from rmq_2_isse is required to make the daemon
-                pidfile unique for running multiple instances.
-
-    Example:
-        daemon_rmq_2_isse.py -a start -c rabbitmq -d config -M
 
 
 # Testing:
