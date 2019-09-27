@@ -179,7 +179,7 @@ def validate_create_settings(cfg, **kwargs):
     return cfg, status_flag
 
 
-def is_valid_msg(line, LOG, **kwargs):
+def is_valid_msg(line, log, **kwargs):
 
     """Function:  is_valid_msg
 
@@ -187,20 +187,20 @@ def is_valid_msg(line, LOG, **kwargs):
 
     Arguments:
         (input) line -> Single entry line from RabbitMQ queue message.
-        (input) LOG -> Log class instance.
+        (input) log -> Log class instance.
         (output) True|False - If the message is valid.
 
     """
 
-    LOG.log_info("is_valid_msg:  Checking validation of message...")
+    log.log_info("is_valid_msg:  Checking validation of message...")
     status = True
 
     if len(line.split()) == 0:
-        LOG.log_err("Detected no entries in message line.")
+        log.log_err("Detected no entries in message line.")
         status = False
 
     elif len(line.split()) > 1:
-        LOG.log_err("Detected more than one entry in message line: %s" %
+        log.log_err("Detected more than one entry in message line: %s" %
                     (line))
         status = False
 
