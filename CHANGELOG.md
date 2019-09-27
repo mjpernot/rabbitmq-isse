@@ -11,6 +11,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - run_program:  Fixed problem with mutable default arguments issue.
 
 ### Changed
+- find_files:  Changed variable to standard naming convention.
 - is_valid_ext:  Changed variable to standard naming convention.
 - is_valid_name:  Changed variable to standard naming convention.
 - process_msg:  Changed variables to standard naming convention.
