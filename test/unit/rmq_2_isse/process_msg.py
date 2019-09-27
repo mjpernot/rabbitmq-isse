@@ -9,7 +9,6 @@
         test/unit/rmq_2_isse/process_msg.py
 
     Arguments:
-        None
 
 """
 
@@ -32,7 +31,6 @@ sys.path.append(os.getcwd())
 import rmq_2_isse
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -42,12 +40,10 @@ class UnitTest(unittest.TestCase):
 
     Description:  Class which is a representation of a unit testing.
 
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:  None
-
     Methods:
         setUp -> Initialize testing environment.
+        test_is_valid_name_false -> Test with is valid name is false.
+        test_is_valid_name_true -> Test with is valid name is true.
         test_empty_line_body -> Test an empty body argument.
         test_one_line_body -> Test with a one line body argument.
         test_one_line_multi_body -> Test one line multiple entries for body.
@@ -66,7 +62,6 @@ class UnitTest(unittest.TestCase):
         test_multi_line_file_list -> Test with multiple entries in file list.
         test_is_valid_ext_false -> Test with is valid extension is false.
         test_is_valid_ext_true -> Test with is valid extension is true.
-        tearDown -> Clean up of testing environment.
 
     """
 
@@ -77,7 +72,6 @@ class UnitTest(unittest.TestCase):
         Description:  Initialization for unit testing.
 
         Arguments:
-            None
 
         """
 
@@ -86,10 +80,6 @@ class UnitTest(unittest.TestCase):
             """Class:  CfgTest
 
             Description:  Class which is a representation of a cfg module.
-
-            Super-Class:  object
-
-            Sub-Classes:  None
 
             Methods:
                 __init__ -> Initialize configuration environment.
@@ -103,7 +93,6 @@ class UnitTest(unittest.TestCase):
                 Description:  Initialization instance of the CfgTest class.
 
                 Arguments:
-                        None
 
                 """
 
@@ -117,6 +106,63 @@ class UnitTest(unittest.TestCase):
         self.body = "File1.txt"
         self.rq = "RabbitMQ Instance"
 
+    @mock.patch("rmq_2_isse.non_proc_msg")
+    @mock.patch("rmq_2_isse.is_valid_name")
+    @mock.patch("rmq_2_isse.find_files")
+    @mock.patch("rmq_2_isse.is_valid_msg")
+    @mock.patch("rmq_2_isse.gen_libs")
+    @mock.patch("rmq_2_isse.gen_class.Logger")
+    def test_is_valid_name_false(self, mock_log, mock_lib, mock_valid,
+                                 mock_find, mock_name, mock_msg):
+
+        """Function:  test_is_valid_name_true
+
+        Description:  Test with is valid name is true.
+
+        Arguments:
+
+        """
+
+        mock_log.return_value = True
+        mock_lib.file_search_cnt.return_value = 0
+        mock_valid.return_value = True
+        mock_find.return_value = ["File1.txt"]
+        mock_lib.gen_libs.write_file.return_value = True
+        mock_name.return_value = False
+        mock_msg.return_value = True
+
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
+                                                self.method, self.body))
+
+    @mock.patch("rmq_2_isse.is_valid_name")
+    @mock.patch("rmq_2_isse.is_valid_ext")
+    @mock.patch("rmq_2_isse.find_files")
+    @mock.patch("rmq_2_isse.is_valid_msg")
+    @mock.patch("rmq_2_isse.gen_libs")
+    @mock.patch("rmq_2_isse.gen_class.Logger")
+    def test_is_valid_name_true(self, mock_log, mock_lib, mock_valid, mock_find,
+                                mock_ext, mock_name):
+
+        """Function:  test_is_valid_name_true
+
+        Description:  Test with is valid name is true.
+
+        Arguments:
+
+        """
+
+        mock_log.return_value = True
+        mock_lib.file_search_cnt.return_value = 0
+        mock_valid.return_value = True
+        mock_find.return_value = ["File1.txt"]
+        mock_ext.return_value = True
+        mock_lib.gen_libs.write_file.return_value = True
+        mock_lib.gen_libs.cp_file2.return_value = True
+        mock_name.return_value = True
+
+        self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
+                                                self.method, self.body))
+
     @mock.patch("rmq_2_isse.gen_class.Logger")
     def test_empty_line_body(self, mock_log):
 
@@ -125,7 +171,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test process_msg function with empty line body.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
 
         """
 
@@ -146,9 +191,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test process_msg function with an one line body.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_cnt -> Mock Ref:  rmq_2_isse.gen_libs.file_search_cnt
-            mock_msg -> Mock Ref:  rmq_2_isse.non_proc_msg
 
         """
 
@@ -170,9 +212,6 @@ class UnitTest(unittest.TestCase):
             argument.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_cnt -> Mock Ref:  rmq_2_isse.gen_libs.file_search_cnt
-            mock_msg -> Mock Ref:  rmq_2_isse.non_proc_msg
 
         """
 
@@ -195,9 +234,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test process_msg function with multi line body.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_cnt -> Mock Ref:  rmq_2_isse.gen_libs.file_search_cnt
-            mock_msg -> Mock Ref:  rmq_2_isse.non_proc_msg
 
         """
 
@@ -220,9 +256,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test process_msg function with multi line multi body.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_cnt -> Mock Ref:  rmq_2_isse.gen_libs.file_search_cnt
-            mock_msg -> Mock Ref:  rmq_2_isse.non_proc_msg
 
         """
 
@@ -246,10 +279,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test process_msg function with zero count on resends.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_msg -> Mock Ref:  rmq_2_isse.non_proc_msg
-            mock_valid -> Mock Ref:  rmq_2_isse.is_valid_msg
 
         """
 
@@ -273,10 +302,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test process_msg function with one count on resends.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_msg -> Mock Ref:  rmq_2_isse.non_proc_msg
-            mock_valid -> Mock Ref:  rmq_2_isse.is_valid_msg
 
         """
 
@@ -300,10 +325,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test process_msg function with count equal to resends.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_msg -> Mock Ref:  rmq_2_isse.non_proc_msg
-            mock_valid -> Mock Ref:  rmq_2_isse.is_valid_msg
 
         """
 
@@ -327,9 +348,6 @@ class UnitTest(unittest.TestCase):
             resends.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_msg -> Mock Ref:  rmq_2_isse.non_proc_msg
 
         """
 
@@ -352,10 +370,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test process_msg function with valid message is false.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_msg -> Mock Ref:  rmq_2_isse.non_proc_msg
-            mock_valid -> Mock Ref:  rmq_2_isse.is_valid_msg
 
         """
 
@@ -381,11 +395,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test process_msg function with valid message is true.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_msg -> Mock Ref:  rmq_2_isse.non_proc_msg
-            mock_valid -> Mock Ref:  rmq_2_isse.is_valid_msg
-            mock_find -> Mock Ref:  rmq_2_isse.find_files
 
         """
 
@@ -413,11 +422,6 @@ class UnitTest(unittest.TestCase):
             list.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_msg -> Mock Ref:  rmq_2_isse.non_proc_msg
-            mock_valid -> Mock Ref:  rmq_2_isse.is_valid_msg
-            mock_find -> Mock Ref:  rmq_2_isse.find_files
 
         """
 
@@ -446,12 +450,6 @@ class UnitTest(unittest.TestCase):
             list.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_valid -> Mock Ref:  rmq_2_isse.is_valid_msg
-            mock_find -> Mock Ref:  rmq_2_isse.find_files
-            mock_ext -> Mock Ref:  rmq_2_isse.is_valid_ext
-            mock_name -> Mock Ref:  rmq_2_isse.is_valid_name
 
         """
 
@@ -479,11 +477,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test process_msg function with empty file list.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_msg -> Mock Ref:  rmq_2_isse.non_proc_msg
-            mock_valid -> Mock Ref:  rmq_2_isse.is_valid_msg
-            mock_find -> Mock Ref:  rmq_2_isse.find_files
 
         """
 
@@ -511,12 +504,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test process_msg function with one entry in file list.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_valid -> Mock Ref:  rmq_2_isse.is_valid_msg
-            mock_find -> Mock Ref:  rmq_2_isse.find_files
-            mock_ext -> Mock Ref:  rmq_2_isse.is_valid_ext
-            mock_name -> Mock Ref:  rmq_2_isse.is_valid_name
 
         """
 
@@ -546,12 +533,6 @@ class UnitTest(unittest.TestCase):
             list.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_valid -> Mock Ref:  rmq_2_isse.is_valid_msg
-            mock_find -> Mock Ref:  rmq_2_isse.find_files
-            mock_ext -> Mock Ref:  rmq_2_isse.is_valid_ext
-            mock_name -> Mock Ref:  rmq_2_isse.is_valid_name
 
         """
 
@@ -581,12 +562,6 @@ class UnitTest(unittest.TestCase):
             false.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_valid -> Mock Ref:  rmq_2_isse.is_valid_msg
-            mock_find -> Mock Ref:  rmq_2_isse.find_files
-            mock_ext -> Mock Ref:  rmq_2_isse.is_valid_ext
-            mock_name -> Mock Ref:  rmq_2_isse.is_valid_name
 
         """
 
@@ -616,11 +591,6 @@ class UnitTest(unittest.TestCase):
             true.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_valid -> Mock Ref:  rmq_2_isse.is_valid_msg
-            mock_find -> Mock Ref:  rmq_2_isse.find_files
-            mock_ext -> Mock Ref:  rmq_2_isse.is_valid_ext
 
         """
 
@@ -635,19 +605,6 @@ class UnitTest(unittest.TestCase):
 
         self.assertFalse(rmq_2_isse.process_msg(self.rq, mock_log, self.cfg,
                                                 self.method, self.body))
-
-    def tearDown(self):
-
-        """Function:  tearDown
-
-        Description:  Clean up of unit testing.
-
-        Arguments:
-            None
-
-        """
-
-        pass
 
 
 if __name__ == "__main__":
