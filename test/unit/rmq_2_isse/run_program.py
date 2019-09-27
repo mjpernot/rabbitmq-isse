@@ -9,7 +9,6 @@
         test/unit/rmq_2_isse/run_program.py
 
     Arguments:
-        None
 
 """
 
@@ -33,11 +32,10 @@ import rmq_2_isse
 import lib.gen_libs as gen_libs
 import version
 
-# Version
 __version__ = version.__version__
 
 
-def monitor_queue(cfg, LOG, **kwargs):
+def monitor_queue(cfg, log, **kwargs):
 
     """Function Stub:  monitor_queue
 
@@ -45,11 +43,50 @@ def monitor_queue(cfg, LOG, **kwargs):
 
     Arguments:
         cfg -> Stub argument holder.
-        LOG -> Stub argument holder.
+        log -> Stub argument holder.
 
     """
 
     pass
+
+
+class ProgramLock(object):
+
+    """Class:  ProgramLock
+
+    Description:  Mock of the gen_class.ProgramLock class.
+
+    Methods:
+        __init__ -> Class instance initilization.
+        __del__ -> Deletion of the ProgramLock instance.
+
+    """
+
+    def __init__(self, argv, flavor_id=""):
+
+        """Method:  __init__
+
+        Description:  Initialization of an instance of the ProgramLock class.
+
+        Arguments:
+            (input) argv -> Arguments from the command line.
+            (input) flavor_id -> Unique identifier for an instance.
+
+        """
+
+        self.lock_created = True
+
+    def __del__(self):
+
+        """Method:  __del__
+
+        Description:  Deletion of the ProgramLock instance.
+
+        Arguments:
+
+        """
+
+        return True
 
 
 class UnitTest(unittest.TestCase):
@@ -57,10 +94,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:  None
 
     Methods:
         setUp -> Initialize testing environment.
@@ -79,7 +112,6 @@ class UnitTest(unittest.TestCase):
         Description:  Initialization for unit testing.
 
         Arguments:
-            None
 
         """
 
@@ -88,10 +120,6 @@ class UnitTest(unittest.TestCase):
             """Class:  CfgTest
 
             Description:  Class which is a representation of a cfg module.
-
-            Super-Class:  object
-
-            Sub-Classes:  None
 
             Methods:
                 __init__ -> Initialize configuration environment.
@@ -105,7 +133,6 @@ class UnitTest(unittest.TestCase):
                 Description:  Initialization instance of the CfgTest class.
 
                 Arguments:
-                        None
 
                 """
 
@@ -120,8 +147,7 @@ class UnitTest(unittest.TestCase):
                 self.max_resend = 5
                 self.file_filter = []
 
-        self.CT = CfgTest()
-
+        self.ct = CfgTest()
         self.args = {"-c": "config_file", "-d": "config_dir", "-M": True}
         self.func_dict = {"-M": monitor_queue}
 
@@ -142,8 +168,8 @@ class UnitTest(unittest.TestCase):
 
         mock_lock.side_effect = rmq_2_isse.gen_class.SingleInstanceException
         mock_log.return_value = rmq_2_isse.gen_class.Logger
-        mock_load = self.CT
-        mock_valid.return_value = (self.CT, True)
+        mock_load = self.ct
+        mock_valid.return_value = (self.ct, True)
         mock_log.log_close.return_value = True
         mock_log = rmq_2_isse.gen_class.ProgramLock
 
@@ -161,16 +187,12 @@ class UnitTest(unittest.TestCase):
         Description:  Test run_program function with call to one function.
 
         Arguments:
-            mock_class -> Mock Ref:  rmq_2_isse.gen_class
-            mock_load -> Mock Ref:  rmq_2_isse.gen_libs.load_module
-            mock_valid -> Mock Ref:  rmq_2_isse.validate_create_settings
-            mock_func -> Mock Ref:  rmq_2_isse.monitor_queue
 
         """
 
         mock_class.Logger.return_value = rmq_2_isse.gen_class.Logger
-        mock_load = self.CT
-        mock_valid.return_value = (self.CT, True)
+        mock_load = self.ct
+        mock_valid.return_value = (self.ct, True)
         mock_class.Logger.log_close.return_value = True
         mock_class.ProgramLock = rmq_2_isse.gen_class.ProgramLock
         mock_func.return_value = True
@@ -189,16 +211,12 @@ class UnitTest(unittest.TestCase):
         Description:  Test run_program function with call to no functions.
 
         Arguments:
-            mock_class -> Mock Ref:  rmq_2_isse.gen_class
-            mock_load -> Mock Ref:  rmq_2_isse.gen_libs.load_module
-            mock_valid -> Mock Ref:  rmq_2_isse.validate_create_settings
-            mock_func -> Mock Ref:  rmq_2_isse.monitor_queue
 
         """
 
         mock_class.Logger.return_value = rmq_2_isse.gen_class.Logger
-        mock_load = self.CT
-        mock_valid.return_value = (self.CT, True)
+        mock_load = self.ct
+        mock_valid.return_value = (self.ct, True)
         mock_class.Logger.log_close.return_value = True
         mock_class.ProgramLock = rmq_2_isse.gen_class.ProgramLock
         mock_func.return_value = True
@@ -215,16 +233,12 @@ class UnitTest(unittest.TestCase):
         Description:  Test run_program function with status is False.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_load -> Mock Ref:  rmq_2_isse.gen_libs.load_module
-            mock_valid -> Mock Ref:  rmq_2_isse.validate_create_settings
 
         """
 
-        # Set mock value for all returns.
         mock_log.return_value = True
-        mock_load = self.CT
-        mock_valid.return_value = (self.CT, False)
+        mock_load = self.ct
+        mock_valid.return_value = (self.ct, False)
 
         with gen_libs.no_std_out():
             self.assertFalse(rmq_2_isse.run_program(self.args, self.func_dict))
@@ -239,16 +253,12 @@ class UnitTest(unittest.TestCase):
         Description:  Test run_program function with status is True.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_load -> Mock Ref:  rmq_2_isse.gen_libs.load_module
-            mock_valid -> Mock Ref:  rmq_2_isse.validate_create_settings
 
         """
 
-        # Set mock value for all returns.
         mock_log.return_value = rmq_2_isse.gen_class.Logger
-        mock_load = self.CT
-        mock_valid.return_value = (self.CT, True)
+        mock_load = self.ct
+        mock_valid.return_value = (self.ct, True)
         mock_log.log_close.return_value = True
 
         # Remove to skip "for" loop.
@@ -263,11 +273,10 @@ class UnitTest(unittest.TestCase):
         Description:  Clean up of unit testing.
 
         Arguments:
-            None
 
         """
 
-        self.CT = None
+        self.ct = None
 
 
 if __name__ == "__main__":
