@@ -9,7 +9,6 @@
         test/integration/rmq_2_isse/find_files.py
 
     Arguments:
-        None
 
 """
 
@@ -36,7 +35,6 @@ import lib.gen_libs as gen_libs
 import lib.gen_class as gen_class
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -45,10 +43,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:  None
 
     Methods:
         setUp -> Initialize testing environment.
@@ -67,19 +61,15 @@ class UnitTest(unittest.TestCase):
         Description:  Initialization for integration testing.
 
         Arguments:
-            None
 
         """
 
         self.base_dir = "test/integration/rmq_2_isse"
         self.test_path = os.path.join(os.getcwd(), self.base_dir)
         self.config_path = os.path.join(self.test_path, "config")
-
         self.cfg = gen_libs.load_module("rabbitmq", self.config_path)
-
         log_path = os.path.join(self.test_path, self.cfg.log_dir)
         self.cfg.log_file = os.path.join(log_path, self.cfg.log_file)
-
         self.cfg.transfer_dir = os.path.join(self.test_path,
                                              self.cfg.transfer_dir)
         self.cfg.message_dir = os.path.join(self.test_path,
@@ -87,12 +77,10 @@ class UnitTest(unittest.TestCase):
         self.cfg.isse_dir = os.path.join(self.test_path, self.cfg.isse_dir)
         self.cfg.proc_file = os.path.join(log_path, self.cfg.proc_file)
         self.cfg.delta_month = 2
-
-        self.LOG = gen_class.Logger(self.cfg.log_file, self.cfg.log_file,
+        self.log = gen_class.Logger(self.cfg.log_file, self.cfg.log_file,
                                     "INFO",
                                     "%(asctime)s %(levelname)s %(message)s",
                                     "%Y-%m-%dT%H:%M:%SZ")
-
         self.line = "File1"
         self.cur_mon_file = "File1.txt"
         self.cur_mon = "2018/01"
@@ -116,9 +104,8 @@ class UnitTest(unittest.TestCase):
         mock_date.datetime.now.return_value = \
             datetime.datetime.strptime(self.cur_mon, "%Y/%m")
 
-        file_list = rmq_2_isse.find_files(self.LOG, self.cfg, self.line)
-
-        self.LOG.log_close()
+        file_list = rmq_2_isse.find_files(self.log, self.cfg, self.line)
+        self.log.log_close()
 
         if os.path.join(self.cfg.transfer_dir, self.cur_mon,
                         self.cur_mon_file) in file_list:
@@ -144,9 +131,8 @@ class UnitTest(unittest.TestCase):
         mock_date.datetime.now.return_value = \
             datetime.datetime.strptime(self.past_mon, "%Y/%m")
 
-        file_list = rmq_2_isse.find_files(self.LOG, self.cfg, "File2")
-
-        self.LOG.log_close()
+        file_list = rmq_2_isse.find_files(self.log, self.cfg, "File2")
+        self.log.log_close()
 
         if os.path.join(self.cfg.transfer_dir, self.past_mon,
                         self.past_mon_file) in file_list:
@@ -172,10 +158,8 @@ class UnitTest(unittest.TestCase):
         mock_date.datetime.now.return_value = \
             datetime.datetime.strptime(self.multi_mon, "%Y/%m")
 
-        file_list = rmq_2_isse.find_files(self.LOG, self.cfg, "File5")
-
-        self.LOG.log_close()
-
+        file_list = rmq_2_isse.find_files(self.log, self.cfg, "File5")
+        self.log.log_close()
         status = True
 
         for x in self.multi_file:
@@ -200,9 +184,8 @@ class UnitTest(unittest.TestCase):
         mock_date.datetime.now.return_value = \
             datetime.datetime.strptime(self.cur_mon, "%Y/%m")
 
-        file_list = rmq_2_isse.find_files(self.LOG, self.cfg, "File6")
-
-        self.LOG.log_close()
+        file_list = rmq_2_isse.find_files(self.log, self.cfg, "File6")
+        self.log.log_close()
 
         if file_list:
             status = True
@@ -219,7 +202,6 @@ class UnitTest(unittest.TestCase):
         Description:  Clean up of integration testing.
 
         Arguments:
-            None
 
         """
 

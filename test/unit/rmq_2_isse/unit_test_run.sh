@@ -6,6 +6,7 @@
 
 echo ""
 echo "Unit test"
+test/unit/rmq_2_isse/process_list.py
 test/unit/rmq_2_isse/help_message.py
 test/unit/rmq_2_isse/is_valid_msg.py
 test/unit/rmq_2_isse/validate_create_settings.py

@@ -9,7 +9,6 @@
         test/integration/rmq_2_isse/process_msg.py
 
     Arguments:
-        None
 
 """
 
@@ -36,7 +35,6 @@ import lib.gen_libs as gen_libs
 import lib.gen_class as gen_class
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -45,10 +43,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:  None
 
     Methods:
         setUp -> Initialize testing environment.
@@ -85,7 +79,6 @@ class UnitTest(unittest.TestCase):
         Description:  Initialization for integration testing.
 
         Arguments:
-            None
 
         """
 
@@ -109,11 +102,11 @@ class UnitTest(unittest.TestCase):
 
         self.cfg.proc_file = os.path.join(log_path, self.cfg.proc_file)
 
-        self.LOG = gen_class.Logger(self.cfg.log_file, self.cfg.log_file,
+        self.log = gen_class.Logger(self.cfg.log_file, self.cfg.log_file,
                                     "INFO",
                                     "%(asctime)s %(levelname)s %(message)s",
                                     "%Y-%m-%dT%H:%M:%SZ")
-        self.RQ = rabbitmq_class.RabbitMQCon(self.cfg.user, self.cfg.passwd,
+        self.rq = rabbitmq_class.RabbitMQCon(self.cfg.user, self.cfg.passwd,
                                              self.cfg.host, self.cfg.port,
                                              self.cfg.exchange_name,
                                              self.cfg.exchange_type,
@@ -149,11 +142,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test of gen_libs.file_search_cnt call.
 
         Arguments:
-            mock_write -> Mock Ref:  rmq_2_isse.gen_libs.write_file
-            mock_copy -> Mock Ref:  rmq_2_isse.gen_libs.cp_file2
-            mock_valid -> Mock Ref:  rmq_2_isse.is_valid_msg
-            mock_find -> Mock Ref:  rmq_2_isse.find_files
-            mock_ext -> Mock Ref:  rmq_2_isse.is_valid_ext
 
         """
 
@@ -163,10 +151,10 @@ class UnitTest(unittest.TestCase):
         mock_find.return_value = ["File1.txt"]
         mock_ext.return_value = True
 
-        rmq_2_isse.process_msg(self.RQ, self.LOG, self.cfg, self.method,
+        rmq_2_isse.process_msg(self.rq, self.log, self.cfg, self.method,
                                self.body)
 
-        self.LOG.log_close()
+        self.log.log_close()
 
         if self.file_search_cnt_true in open(self.cfg.log_file).read():
             status = True
@@ -184,7 +172,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test of non_proc_msg function call.
 
         Arguments:
-            mock_mail -> Mock Ref:  rmq_2_isse.gen_class.Mail
 
         """
 
@@ -192,10 +179,10 @@ class UnitTest(unittest.TestCase):
 
         self.cfg.max_resend = -1
 
-        rmq_2_isse.process_msg(self.RQ, self.LOG, self.cfg, self.method,
+        rmq_2_isse.process_msg(self.rq, self.log, self.cfg, self.method,
                                self.body)
 
-        self.LOG.log_close()
+        self.log.log_close()
 
         if self.non_proc_msg in open(self.cfg.log_file).read():
             status = True
@@ -217,10 +204,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test is_valid_msg function with a valid message body.
 
         Arguments:
-            mock_write -> Mock Ref:  rmq_2_isse.gen_libs.write_file
-            mock_copy -> Mock Ref:  rmq_2_isse.gen_libs.cp_file2
-            mock_find -> Mock Ref:  rmq_2_isse.find_files
-            mock_ext -> Mock Ref:  rmq_2_isse.is_valid_ext
 
         """
 
@@ -229,10 +212,10 @@ class UnitTest(unittest.TestCase):
         mock_write.return_value = True
         mock_copy.return_value = True
 
-        rmq_2_isse.process_msg(self.RQ, self.LOG, self.cfg, self.method,
+        rmq_2_isse.process_msg(self.rq, self.log, self.cfg, self.method,
                                self.body)
 
-        self.LOG.log_close()
+        self.log.log_close()
 
         if self.is_valid_msg_true in open(self.cfg.log_file).read():
             status = True
@@ -252,18 +235,16 @@ class UnitTest(unittest.TestCase):
             is_valid_msg.
 
         Arguments:
-            mock_valid -> Mock Ref:  rmq_2_isse.is_valid_msg
-            mock_mail -> Mock Ref:  rmq_2_isse.gen_class.Mail
 
         """
 
         mock_valid.return_value = False
         mock_mail.send_mail.return_value = True
 
-        rmq_2_isse.process_msg(self.RQ, self.LOG, self.cfg, self.method,
+        rmq_2_isse.process_msg(self.rq, self.log, self.cfg, self.method,
                                self.body)
 
-        self.LOG.log_close()
+        self.log.log_close()
 
         if self.is_valid_msg_false in open(self.cfg.log_file).read():
             status = True
@@ -286,11 +267,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test find_files function with no files found.
 
         Arguments:
-            mock_write -> Mock Ref:  rmq_2_isse.gen_libs.write_file
-            mock_copy -> Mock Ref:  rmq_2_isse.gen_libs.cp_file2
-            mock_ext -> Mock Ref:  rmq_2_isse.is_valid_ext
-            mock_date -> Mock Ref:  rmq_2_isse.datetime.datetime.strftime
-            mock_mail -> Mock Ref:  rmq_2_isse.gen_class.Mail
 
         """
 
@@ -303,10 +279,10 @@ class UnitTest(unittest.TestCase):
         mock_write.return_value = True
         mock_copy.return_value = True
 
-        rmq_2_isse.process_msg(self.RQ, self.LOG, self.cfg, self.method,
+        rmq_2_isse.process_msg(self.rq, self.log, self.cfg, self.method,
                                self.body)
 
-        self.LOG.log_close()
+        self.log.log_close()
 
         if self.find_files_zero in open(self.cfg.log_file).read():
             status = True
@@ -329,11 +305,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test find_files function with one file found.
 
         Arguments:
-            mock_write -> Mock Ref:  rmq_2_isse.gen_libs.write_file
-            mock_copy -> Mock Ref:  rmq_2_isse.gen_libs.cp_file2
-            mock_ext -> Mock Ref:  rmq_2_isse.is_valid_ext
-            mock_date -> Mock Ref:  rmq_2_isse.datetime.datetime.strftime
-            mock_mail -> Mock Ref:  rmq_2_isse.gen_class.Mail
 
         """
 
@@ -346,10 +317,10 @@ class UnitTest(unittest.TestCase):
         mock_write.return_value = True
         mock_copy.return_value = True
 
-        rmq_2_isse.process_msg(self.RQ, self.LOG, self.cfg, self.method,
+        rmq_2_isse.process_msg(self.rq, self.log, self.cfg, self.method,
                                self.body)
 
-        self.LOG.log_close()
+        self.log.log_close()
 
         if self.find_files_one in open(self.cfg.log_file).read():
             status = True
@@ -373,11 +344,6 @@ class UnitTest(unittest.TestCase):
             history directory.
 
         Arguments:
-            mock_write -> Mock Ref:  rmq_2_isse.gen_libs.write_file
-            mock_copy -> Mock Ref:  rmq_2_isse.gen_libs.cp_file2
-            mock_ext -> Mock Ref:  rmq_2_isse.is_valid_ext
-            mock_date -> Mock Ref:  rmq_2_isse.datetime.datetime.strftime
-            mock_mail -> Mock Ref:  rmq_2_isse.gen_class.Mail
 
         """
 
@@ -392,10 +358,10 @@ class UnitTest(unittest.TestCase):
         mock_write.return_value = True
         mock_copy.return_value = True
 
-        rmq_2_isse.process_msg(self.RQ, self.LOG, self.cfg, self.method,
+        rmq_2_isse.process_msg(self.rq, self.log, self.cfg, self.method,
                                self.body)
 
-        self.LOG.log_close()
+        self.log.log_close()
 
         if self.find_files_one in open(self.cfg.log_file).read():
             status = True
@@ -419,11 +385,6 @@ class UnitTest(unittest.TestCase):
             history directory.
 
         Arguments:
-            mock_write -> Mock Ref:  rmq_2_isse.gen_libs.write_file
-            mock_copy -> Mock Ref:  rmq_2_isse.gen_libs.cp_file2
-            mock_ext -> Mock Ref:  rmq_2_isse.is_valid_ext
-            mock_date -> Mock Ref:  rmq_2_isse.datetime.datetime.strftime
-            mock_mail -> Mock Ref:  rmq_2_isse.gen_class.Mail
 
         """
 
@@ -438,10 +399,10 @@ class UnitTest(unittest.TestCase):
         mock_write.return_value = True
         mock_copy.return_value = True
 
-        rmq_2_isse.process_msg(self.RQ, self.LOG, self.cfg, self.method,
+        rmq_2_isse.process_msg(self.rq, self.log, self.cfg, self.method,
                                self.body)
 
-        self.LOG.log_close()
+        self.log.log_close()
 
         if self.find_files_zero in open(self.cfg.log_file).read():
             status = True
@@ -463,10 +424,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test is_valid_ext function with a valid extension.
 
         Arguments:
-            mock_write -> Mock Ref:  rmq_2_isse.gen_libs.write_file
-            mock_copy -> Mock Ref:  rmq_2_isse.gen_libs.cp_file2
-            mock_date -> Mock Ref:  rmq_2_isse.datetime.datetime.strftime
-            mock_mail -> Mock Ref:  rmq_2_isse.gen_class.Mail
 
         """
 
@@ -477,10 +434,10 @@ class UnitTest(unittest.TestCase):
         mock_write.return_value = True
         mock_copy.return_value = True
 
-        rmq_2_isse.process_msg(self.RQ, self.LOG, self.cfg, self.method,
+        rmq_2_isse.process_msg(self.rq, self.log, self.cfg, self.method,
                                self.body)
 
-        self.LOG.log_close()
+        self.log.log_close()
 
         if self.valid_ext_true in open(self.cfg.log_file).read():
             status = True
@@ -502,10 +459,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test is_valid_ext function with an invalid extension.
 
         Arguments:
-            mock_write -> Mock Ref:  rmq_2_isse.gen_libs.write_file
-            mock_copy -> Mock Ref:  rmq_2_isse.gen_libs.cp_file2
-            mock_date -> Mock Ref:  rmq_2_isse.datetime.datetime.strftime
-            mock_mail -> Mock Ref:  rmq_2_isse.gen_class.Mail
 
         """
 
@@ -518,10 +471,10 @@ class UnitTest(unittest.TestCase):
         mock_write.return_value = True
         mock_copy.return_value = True
 
-        rmq_2_isse.process_msg(self.RQ, self.LOG, self.cfg, self.method,
+        rmq_2_isse.process_msg(self.rq, self.log, self.cfg, self.method,
                                self.body)
 
-        self.LOG.log_close()
+        self.log.log_close()
 
         if self.valid_ext_false in open(self.cfg.log_file).read():
             status = True
@@ -541,9 +494,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test gen_libs.cp_file2 function with valid file.
 
         Arguments:
-            mock_write -> Mock Ref:  rmq_2_isse.gen_libs.write_file
-            mock_date -> Mock Ref:  rmq_2_isse.datetime.datetime.strftime
-            mock_mail -> Mock Ref:  rmq_2_isse.gen_class.Mail
 
         """
 
@@ -553,10 +503,10 @@ class UnitTest(unittest.TestCase):
             datetime.datetime.strptime("2018-01", "%Y-%m")
         mock_write.return_value = True
 
-        rmq_2_isse.process_msg(self.RQ, self.LOG, self.cfg, self.method,
+        rmq_2_isse.process_msg(self.rq, self.log, self.cfg, self.method,
                                self.body)
 
-        self.LOG.log_close()
+        self.log.log_close()
 
         if self.valid_ext_true in open(self.cfg.log_file).read() \
            and os.path.isfile(os.path.join(self.cfg.isse_dir, self.body)):
@@ -576,8 +526,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test test_max_resend with reading from file.
 
         Arguments:
-            mock_date -> Mock Ref:  rmq_2_isse.datetime.datetime.strftime
-            mock_mail -> Mock Ref:  rmq_2_isse.gen_class.Mail
 
         """
 
@@ -589,10 +537,10 @@ class UnitTest(unittest.TestCase):
         for x in range(0, 6):
             gen_libs.write_file(self.cfg.proc_file, data=self.body)
 
-        rmq_2_isse.process_msg(self.RQ, self.LOG, self.cfg, self.method,
+        rmq_2_isse.process_msg(self.rq, self.log, self.cfg, self.method,
                                self.body)
 
-        self.LOG.log_close()
+        self.log.log_close()
 
         if self.non_proc_msg in open(self.cfg.log_file).read():
             status = True
@@ -614,10 +562,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test is_valid_name function with an invalid file name.
 
         Arguments:
-            mock_write -> Mock Ref:  rmq_2_isse.gen_libs.write_file
-            mock_copy -> Mock Ref:  rmq_2_isse.gen_libs.cp_file2
-            mock_date -> Mock Ref:  rmq_2_isse.datetime.datetime.strftime
-            mock_mail -> Mock Ref:  rmq_2_isse.gen_class.Mail
 
         """
 
@@ -630,10 +574,10 @@ class UnitTest(unittest.TestCase):
         mock_write.return_value = True
         mock_copy.return_value = True
 
-        rmq_2_isse.process_msg(self.RQ, self.LOG, self.cfg, self.method,
+        rmq_2_isse.process_msg(self.rq, self.log, self.cfg, self.method,
                                self.body)
 
-        self.LOG.log_close()
+        self.log.log_close()
 
         if self.valid_name_false in open(self.cfg.log_file).read():
             status = True
@@ -655,10 +599,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test is_valid_name function with an valid file name.
 
         Arguments:
-            mock_write -> Mock Ref:  rmq_2_isse.gen_libs.write_file
-            mock_copy -> Mock Ref:  rmq_2_isse.gen_libs.cp_file2
-            mock_date -> Mock Ref:  rmq_2_isse.datetime.datetime.strftime
-            mock_mail -> Mock Ref:  rmq_2_isse.gen_class.Mail
 
         """
 
@@ -672,10 +612,10 @@ class UnitTest(unittest.TestCase):
         mock_write.return_value = True
         mock_copy.return_value = True
 
-        rmq_2_isse.process_msg(self.RQ, self.LOG, self.cfg, self.method,
+        rmq_2_isse.process_msg(self.rq, self.log, self.cfg, self.method,
                                self.body)
 
-        self.LOG.log_close()
+        self.log.log_close()
 
         if self.valid_name_true in open(self.cfg.log_file).read():
             status = True
@@ -692,7 +632,6 @@ class UnitTest(unittest.TestCase):
         Description:  Clean up of integration testing.
 
         Arguments:
-            None
 
         """
 

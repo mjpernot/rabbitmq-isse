@@ -9,7 +9,6 @@
         test/unit/rmq_2_isse/main.py
 
     Arguments:
-        None
 
 """
 
@@ -35,7 +34,6 @@ sys.path.append(os.getcwd())
 import rmq_2_isse
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -44,10 +42,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:  None
 
     Methods:
         setUp -> Initialize testing environment.
@@ -71,7 +65,6 @@ class UnitTest(unittest.TestCase):
         Description:  Initialization for unit testing.
 
         Arguments:
-            None
 
         """
 
@@ -87,8 +80,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test main function with Help_Func returns True.
 
         Arguments:
-            mock_arg -> Mock Ref:  rmq_2_isse.arg_parser.arg_parse2
-            mock_help -> Mock Ref:  rmq_2_isse.gen_libs.help_func
 
         """
 
@@ -106,8 +97,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test main function with Help_Func returns False.
 
         Arguments:
-            mock_arg -> Mock Ref:  rmq_2_isse.arg_parser
-            mock_help -> Mock Ref:  rmq_2_isse.gen_libs.help_func
 
         """
 
@@ -127,8 +116,6 @@ class UnitTest(unittest.TestCase):
             arg_dir_chk_crt returns True.
 
         Arguments:
-            mock_arg -> Mock Ref:  rmq_2_isse.arg_parser
-            mock_help -> Mock Ref:  rmq_2_isse.gen_libs.help_func
 
         """
 
@@ -149,8 +136,6 @@ class UnitTest(unittest.TestCase):
             arg_dir_chk_crt returns True.
 
         Arguments:
-            mock_arg -> Mock Ref:  rmq_2_isse.arg_parser
-            mock_help -> Mock Ref:  rmq_2_isse.gen_libs.help_func
 
         """
 
@@ -171,8 +156,6 @@ class UnitTest(unittest.TestCase):
             arg_dir_chk_crt returns False.
 
         Arguments:
-            mock_arg -> Mock Ref:  rmq_2_isse.arg_parser
-            mock_help -> Mock Ref:  rmq_2_isse.gen_libs.help_func
 
         """
 
@@ -194,9 +177,6 @@ class UnitTest(unittest.TestCase):
             arg_dir_chk_crt returns False.
 
         Arguments:
-            mock_arg -> Mock Ref:  rmq_2_isse.arg_parser
-            mock_help -> Mock Ref:  rmq_2_isse.gen_libs.help_func
-            mock_run -> Mock Ref:  rmq_2_iise.run_program
 
         """
 

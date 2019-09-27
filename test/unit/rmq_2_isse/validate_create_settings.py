@@ -9,7 +9,6 @@
         test/unit/rmq_2_isse/validate_create_settings.py
 
     Arguments:
-        None
 
 """
 
@@ -35,7 +34,6 @@ import rmq_2_isse
 import version
 import lib.gen_libs as gen_libs
 
-# Version
 __version__ = version.__version__
 
 
@@ -44,10 +42,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:  None
 
     Methods:
         setUp -> Initialize testing environment.
@@ -58,7 +52,6 @@ class UnitTest(unittest.TestCase):
         test_validate_proc_name -> Test existence of process file.
         test_validate_transfer_dir -> Test existence of transfer directory.
         test_validate_isse_dir -> Test existence of isse directory.
-        tearDown -> Clean up of testing environment.
 
     """
 
@@ -69,7 +62,6 @@ class UnitTest(unittest.TestCase):
         Description:  Initialization for unit testing.
 
         Arguments:
-            None
 
         """
 
@@ -78,10 +70,6 @@ class UnitTest(unittest.TestCase):
             """Class:  CfgTest
 
             Description:  Class which is a representation of a cfg module.
-
-            Super-Class:  object
-
-            Sub-Classes:  None
 
             Methods:
                 __init__ -> Initialize configuration environment.
@@ -95,7 +83,6 @@ class UnitTest(unittest.TestCase):
                 Description:  Initialization instance of the CfgTest class.
 
                 Arguments:
-                        None
 
                 """
 
@@ -132,8 +119,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test validate_create_settings function for module values.
 
         Arguments:
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_date -> Mock Ref:  mail_2_rmq.datetime.datetime
 
         """
 
@@ -170,8 +155,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test validate_create_settings function for status return.
 
         Arguments:
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_date -> Mock Ref:  mail_2_rmq.datetime.datetime
 
         """
 
@@ -194,8 +177,6 @@ class UnitTest(unittest.TestCase):
             directory validation.
 
         Arguments:
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_date -> Mock Ref:  mail_2_rmq.datetime.datetime
 
         """
 
@@ -219,8 +200,6 @@ class UnitTest(unittest.TestCase):
             directory validation.
 
         Arguments:
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_date -> Mock Ref:  mail_2_rmq.datetime.datetime
 
         """
 
@@ -243,8 +222,6 @@ class UnitTest(unittest.TestCase):
             file validation.
 
         Arguments:
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_date -> Mock Ref:  mail_2_rmq.datetime.datetime
 
         """
 
@@ -267,8 +244,6 @@ class UnitTest(unittest.TestCase):
             directory validation.
 
         Arguments:
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_date -> Mock Ref:  mail_2_rmq.datetime.datetime
 
         """
 
@@ -292,8 +267,6 @@ class UnitTest(unittest.TestCase):
             directory validation.
 
         Arguments:
-            mock_lib -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_date -> Mock Ref:  mail_2_rmq.datetime.datetime
 
         """
 
@@ -306,19 +279,6 @@ class UnitTest(unittest.TestCase):
         mock_date.strftime.return_value = self.dtg
 
         self.assertFalse(rmq_2_isse.validate_create_settings(self.cfg)[1])
-
-    def tearDown(self):
-
-        """Function:  tearDown
-
-        Description:  Clean up of unit testing.
-
-        Arguments:
-            None
-
-        """
-
-        pass
 
 
 if __name__ == "__main__":

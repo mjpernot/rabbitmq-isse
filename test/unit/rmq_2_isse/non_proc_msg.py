@@ -9,7 +9,6 @@
         test/unit/rmq_2_isse/non_proc_msg.py
 
     Arguments:
-        None
 
 """
 
@@ -32,7 +31,6 @@ sys.path.append(os.getcwd())
 import rmq_2_isse
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -41,10 +39,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:  None
 
     Methods:
         setUp -> Initialize testing environment.
@@ -61,7 +55,6 @@ class UnitTest(unittest.TestCase):
         Description:  Initialization for unit testing.
 
         Arguments:
-            None
 
         """
 
@@ -70,10 +63,6 @@ class UnitTest(unittest.TestCase):
             """Class:  CfgTest
 
             Description:  Class which is a representation of a cfg module.
-
-            Super-Class:  object
-
-            Sub-Classes:  None
 
             Methods:
                 __init__ -> Initialize configuration environment.
@@ -87,7 +76,6 @@ class UnitTest(unittest.TestCase):
                 Description:  Initialization instance of the CfgTest class.
 
                 Arguments:
-                        None
 
                 """
 
@@ -96,7 +84,7 @@ class UnitTest(unittest.TestCase):
                 self.to_line = ""
                 self.message_dir = "message_dir"
 
-        self.CT = CfgTest()
+        self.ct = CfgTest()
 
     @mock.patch("rmq_2_isse.gen_class.Mail")
     @mock.patch("rmq_2_isse.gen_libs.write_file")
@@ -108,9 +96,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test non_proc_msg function with empty to line.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_write -> Mock Ref:  rmq_2_isse.gen_libs.write_file
-            mock_mail -> Mock Ref:  rmq_2_isse.gen_class.Mail
 
         """
 
@@ -118,7 +103,7 @@ class UnitTest(unittest.TestCase):
         mock_write.return_value = True
         mock_mail.send_mail.return_value = True
 
-        self.assertFalse(rmq_2_isse.non_proc_msg(self.CT, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.non_proc_msg(self.ct, mock_log, self.ct,
                                                  "Line", "Test_Subject"))
 
     @mock.patch("rmq_2_isse.gen_class.Mail")
@@ -131,9 +116,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test non_proc_msg function with valid to line.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_write -> Mock Ref:  rmq_2_isse.gen_libs.write_file
-            mock_mail -> Mock Ref:  rmq_2_isse.gen_class.Mail
 
         """
 
@@ -141,9 +123,9 @@ class UnitTest(unittest.TestCase):
         mock_write.return_value = True
         mock_mail.send_mail.return_value = True
 
-        self.CT.to_line = "Test_Email@email.domain"
+        self.ct.to_line = "Test_Email@email.domain"
 
-        self.assertFalse(rmq_2_isse.non_proc_msg(self.CT, mock_log, self.CT,
+        self.assertFalse(rmq_2_isse.non_proc_msg(self.ct, mock_log, self.ct,
                                                  "Line", "Test_Subject"))
 
     def tearDown(self):
@@ -153,11 +135,10 @@ class UnitTest(unittest.TestCase):
         Description:  Clean up of unit testing.
 
         Arguments:
-            None
 
         """
 
-        self.CT = None
+        self.ct = None
 
 
 if __name__ == "__main__":
