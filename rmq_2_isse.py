@@ -99,7 +99,6 @@ import lib.gen_class as gen_class
 import rabbit_lib.rabbitmq_class as rabbitmq_class
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -111,8 +110,6 @@ def help_message(**kwargs):
         message when -h option is selected.
 
     Arguments:
-        (input) **kwargs:
-            None
 
     """
 
@@ -128,8 +125,6 @@ def validate_create_settings(cfg, **kwargs):
 
     Arguments:
         (input) cfg -> Configuration module name.
-        (input) **kwargs:
-            None
         (output) cfg -> Configuration module handler.
         (output) status_flag -> True|False - successfully validation/creation.
 
@@ -142,7 +137,6 @@ def validate_create_settings(cfg, **kwargs):
     proc_name = cfg.proc_file + "_" + cfg.exchange_name + "_" \
         + cfg.queue_name + "." \
         + datetime.datetime.strftime(datetime.datetime.now(), "%Y-%m-%d")
-
     status, err_msg = gen_libs.chk_crt_dir(msg_path, write=True, read=True)
 
     if status:
@@ -158,13 +152,12 @@ def validate_create_settings(cfg, **kwargs):
         log_name = base_name + "_" + cfg.exchange_name + "_" + cfg.queue_name \
             + ext_name
         cfg.log_file = os.path.join(log_path, log_name)
-
         status, err_msg = gen_libs.chk_crt_file(os.path.join(log_path,
                                                              proc_name),
                                                 create=True, write=True,
                                                 read=True)
-        if status:
 
+        if status:
             cfg.proc_file = os.path.join(log_path, proc_name)
 
         else:
@@ -195,8 +188,6 @@ def is_valid_msg(line, LOG, **kwargs):
     Arguments:
         (input) line -> Single entry line from RabbitMQ queue message.
         (input) LOG -> Log class instance.
-        (input) **kwargs:
-            None
         (output) True|False - If the message is valid.
 
     """
@@ -227,8 +218,6 @@ def non_proc_msg(RQ, LOG, cfg, line, subj, **kwargs):
         (input) LOG -> Log class instance.
         (input) cfg -> Configuration settings module for the program.
         (input) line -> Line of message that was not processed.
-        (input) **kwargs:
-            None
 
     """
 
@@ -250,7 +239,6 @@ def non_proc_msg(RQ, LOG, cfg, line, subj, **kwargs):
 
     LOG.log_err("Message: %s was not processed due to: %s" % (line, subj))
     LOG.log_info("Saving message to: %s" % (f_path))
-
     gen_libs.write_file(f_path, data="Exchange: %s, Queue: %s"
                         % (RQ.exchange, RQ.queue_name))
     gen_libs.write_file(f_path, data=line)
@@ -266,8 +254,6 @@ def find_files(LOG, cfg, line, **kwargs):
         (input) LOG -> Log class instance.
         (input) cfg -> Configuration settings module for the program.
         (input) line -> Line of message that was not processed.
-        (input) **kwargs:
-            None
         (output) file_list -> List of files found or empty list.
 
     """
@@ -277,7 +263,6 @@ def find_files(LOG, cfg, line, **kwargs):
     # Check current year/month.
     year_mon = datetime.datetime.strftime(datetime.datetime.now(), "%Y/%m")
     LOG.log_info("Search current year/month directory: %s" % (year_mon))
-
     file_list = gen_libs.dir_file_match(os.path.join(cfg.transfer_dir,
                                                      year_mon), line)
 
@@ -289,11 +274,8 @@ def find_files(LOG, cfg, line, **kwargs):
         for delta in range(1, abs(cfg.delta_month) + 1):
             month, year = gen_libs.month_delta(datetime.datetime.now(),
                                                delta * -1)
-
             month = "%02d" % (month)
-
             LOG.log_info("Searching pass year/month: %s/%s" % (month, year))
-
             file_list = gen_libs.dir_file_match(os.path.join(cfg.transfer_dir,
                                                              str(year) + "/" +
                                                              str(month)),
@@ -330,18 +312,14 @@ def is_valid_ext(f_name, cfg, LOG, **kwargs):
         (input) f_name -> File name.
         (input) cfg -> Configuration settings module for the program.
         (input) LOG -> Log class instance.
-        (input) **kwargs:
-            None
         (output) Status -> True|False - File extension is valid.
 
     """
 
     LOG.log_info("is_valid_ext:  Validating file extension...")
-
     status = True
 
     for ext in cfg.ignore_ext:
-
         if ext in f_name:
             LOG.log_warn("File extension invalid for: %s" % (f_name))
             status = False
@@ -363,8 +341,6 @@ def is_valid_name(f_name, cfg, LOG, **kwargs):
         (input) f_name -> File name.
         (input) cfg -> Configuration settings module for the program.
         (input) LOG -> Log class instance.
-        (input) **kwargs:
-            None
         (output) status -> True|False - File name is valid.
 
     """
@@ -372,9 +348,7 @@ def is_valid_name(f_name, cfg, LOG, **kwargs):
     LOG.log_info("is_valid_name:  Validating file name...")
 
     if cfg.file_filter:
-
         for filter_str in cfg.file_filter:
-
             if filter_str in f_name:
                 status = True
                 break
@@ -403,8 +377,6 @@ def process_msg(RQ, LOG, cfg, method, body, **kwargs):
         (input) cfg -> Configuration settings module for the program.
         (input) method -> Delivery properties.
         (input) body -> Message body.
-        (input) **kwargs:
-            None
 
     """
 
@@ -460,8 +432,6 @@ def monitor_queue(cfg, LOG, **kwargs):
     Arguments:
         (input) cfg -> Configuration settings module for the program.
         (input) LOG -> Log class instance.
-        (input) **kwargs:
-            None
 
     """
 
@@ -486,15 +456,12 @@ def monitor_queue(cfg, LOG, **kwargs):
         RQ.ack(method.delivery_tag)
 
     LOG.log_info("monitor_queue:  Start monitoring queue...")
-
     RQ = rabbitmq_class.RabbitMQCon(cfg.user, cfg.passwd, cfg.host, cfg.port,
                                     cfg.exchange_name, cfg.exchange_type,
                                     cfg.queue_name, cfg.queue_name,
                                     cfg.x_durable, cfg.q_durable,
                                     cfg.auto_delete)
-
     LOG.log_info("Connection info: %s->%s" % (cfg.host, cfg.exchange_name))
-
     connect_status, err_msg = RQ.create_connection()
 
     if connect_status and RQ.channel.is_open:
@@ -518,8 +485,6 @@ def run_program(args_array, func_dict, **kwargs):
     Arguments:
         (input) args_array -> Dict of command line options and values.
         (input) func_dict -> Dictionary list of functions and options.
-        (input) **kwargs:
-            None
 
     """
 
