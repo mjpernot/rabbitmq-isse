@@ -328,7 +328,7 @@ def is_valid_ext(f_name, cfg, LOG, **kwargs):
     return status
 
 
-def is_valid_name(f_name, cfg, LOG, **kwargs):
+def is_valid_name(f_name, cfg, log, **kwargs):
 
     """Function:  is_valid_name
 
@@ -340,12 +340,12 @@ def is_valid_name(f_name, cfg, LOG, **kwargs):
     Arguments:
         (input) f_name -> File name.
         (input) cfg -> Configuration settings module for the program.
-        (input) LOG -> Log class instance.
+        (input) log -> Log class instance.
         (output) status -> True|False - File name is valid.
 
     """
 
-    LOG.log_info("is_valid_name:  Validating file name...")
+    log.log_info("is_valid_name:  Validating file name...")
 
     if cfg.file_filter:
         for filter_str in cfg.file_filter:
@@ -356,7 +356,7 @@ def is_valid_name(f_name, cfg, LOG, **kwargs):
         # Else is for "for" loop.
         else:
             status = False
-            LOG.log_warn("File name does not meet the file name criteria:  %s"
+            log.log_warn("File name does not meet the file name criteria:  %s"
                          % (f_name))
 
     else:
