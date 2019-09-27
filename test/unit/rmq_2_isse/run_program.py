@@ -173,7 +173,6 @@ class UnitTest(unittest.TestCase):
         mock_log.log_close.return_value = True
         mock_log = rmq_2_isse.gen_class.ProgramLock
 
-        #with gen_libs.no_std_out():
         self.assertFalse(rmq_2_isse.run_program(self.args, self.func_dict))
 
     @mock.patch("rmq_2_isse.monitor_queue")

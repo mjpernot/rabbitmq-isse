@@ -140,8 +140,8 @@ class UnitTest(unittest.TestCase):
     @mock.patch("rmq_2_isse.is_valid_msg")
     @mock.patch("rmq_2_isse.gen_libs")
     @mock.patch("rmq_2_isse.gen_class.Logger")
-    def test_is_valid_name_true(self, mock_log, mock_lib, mock_valid, mock_find,
-                                mock_ext, mock_name):
+    def test_is_valid_name_true(self, mock_log, mock_lib, mock_valid,
+                                mock_find, mock_ext, mock_name):
 
         """Function:  test_is_valid_name_true
 
