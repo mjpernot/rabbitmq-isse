@@ -244,30 +244,30 @@ def non_proc_msg(RQ, LOG, cfg, line, subj, **kwargs):
     gen_libs.write_file(f_path, data=line)
 
 
-def find_files(LOG, cfg, line, **kwargs):
+def find_files(log, cfg, line, **kwargs):
 
     """Function:  find_files
 
     Description:  Find one or more files from in a directory.
 
     Arguments:
-        (input) LOG -> Log class instance.
+        (input) log -> Log class instance.
         (input) cfg -> Configuration settings module for the program.
         (input) line -> Line of message that was not processed.
         (output) file_list -> List of files found or empty list.
 
     """
 
-    LOG.log_info("find_files:  Searching for files...")
+    log.log_info("find_files:  Searching for files...")
 
     # Check current year/month.
     year_mon = datetime.datetime.strftime(datetime.datetime.now(), "%Y/%m")
-    LOG.log_info("Search current year/month directory: %s" % (year_mon))
+    log.log_info("Search current year/month directory: %s" % (year_mon))
     file_list = gen_libs.dir_file_match(os.path.join(cfg.transfer_dir,
                                                      year_mon), line)
 
     if not file_list:
-        LOG.log_info("Nothing found in current year/month directory: %s"
+        log.log_info("Nothing found in current year/month directory: %s"
                      % (year_mon))
 
         # Add one to delta so as to produce a range.
@@ -275,7 +275,7 @@ def find_files(LOG, cfg, line, **kwargs):
             month, year = gen_libs.month_delta(datetime.datetime.now(),
                                                delta * -1)
             month = "%02d" % (month)
-            LOG.log_info("Searching pass year/month: %s/%s" % (month, year))
+            log.log_info("Searching pass year/month: %s/%s" % (month, year))
             file_list = gen_libs.dir_file_match(os.path.join(cfg.transfer_dir,
                                                              str(year) + "/" +
                                                              str(month)),
