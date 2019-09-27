@@ -9,7 +9,6 @@
         test/integration/rmq_2_isse/run_program.py
 
     Arguments:
-        None
 
 """
 
@@ -35,7 +34,6 @@ import rmq_2_isse
 import lib.gen_libs as gen_libs
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -44,10 +42,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:  None
 
     Methods:
         setUp -> Initialize testing environment.
@@ -63,7 +57,6 @@ class UnitTest(unittest.TestCase):
         Description:  Initialization for integration testing.
 
         Arguments:
-            None
 
         """
 
@@ -98,10 +91,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test of test_run_program function.
 
         Arguments:
-            mock_consume -> Mock Ref:  rmq_2_isse.rabbitmq_class.RabbitMQCon
-            mock_cfg -> Mock Ref:  rmq_2_isse.gen_libs.load_module
-            mock_base -> Mock Ref:  rmq_2_isse.gen_libs.get_base_dir
-            mock_date -> Mock Ref:  rmq_2_isse.datetime
 
         """
 
@@ -129,7 +118,6 @@ class UnitTest(unittest.TestCase):
         Description:  Clean up of integration testing.
 
         Arguments:
-            None
 
         """
 
