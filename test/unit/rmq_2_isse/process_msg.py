@@ -115,9 +115,9 @@ class UnitTest(unittest.TestCase):
     def test_is_valid_name_false(self, mock_log, mock_lib, mock_valid,
                                  mock_find, mock_name, mock_msg):
 
-        """Function:  test_is_valid_name_true
+        """Function:  test_is_valid_name_false
 
-        Description:  Test with is valid name is true.
+        Description:  Test with is valid name is false.
 
         Arguments:
 
