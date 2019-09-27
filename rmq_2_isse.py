@@ -365,44 +365,44 @@ def is_valid_name(f_name, cfg, LOG, **kwargs):
     return status
 
 
-def process_msg(RQ, LOG, cfg, method, body, **kwargs):
+def process_msg(rq, log, cfg, method, body, **kwargs):
 
     """Function:  process_msg
 
     Description:  Process message from RabbitMQ queue.
 
     Arguments:
-        (input) RQ -> RabbitMQ class instance.
-        (input) LOG -> Log class instance.
+        (input) rq -> RabbitMQ class instance.
+        (input) log -> Log class instance.
         (input) cfg -> Configuration settings module for the program.
         (input) method -> Delivery properties.
         (input) body -> Message body.
 
     """
 
-    LOG.log_info("process_msg:  Processing body of message...")
+    log.log_info("process_msg:  Processing body of message...")
 
     for line in body.split():
-        LOG.log_info("Processing line: %s" % (line))
+        log.log_info("Processing line: %s" % (line))
 
         if gen_libs.file_search_cnt(cfg.proc_file, line) < cfg.max_resend:
-            LOG.log_info("Write entry: %s to tracking file: %s"
+            log.log_info("Write entry: %s to tracking file: %s"
                          % (line, cfg.proc_file))
             gen_libs.write_file(cfg.proc_file, data=line)
 
-            if is_valid_msg(line, LOG):
-                LOG.log_info("Looking for files...")
-                file_list = find_files(LOG, cfg, line)
+            if is_valid_msg(line, log):
+                log.log_info("Looking for files...")
+                file_list = find_files(log, cfg, line)
 
                 if file_list:
 
                     for f_name in file_list:
-                        LOG.log_info("Processing file: %s" % (f_name))
+                        log.log_info("Processing file: %s" % (f_name))
 
-                        if is_valid_name(f_name, cfg, LOG):
+                        if is_valid_name(f_name, cfg, log):
 
-                            if is_valid_ext(f_name, cfg, LOG):
-                                LOG.log_info("Copy file: %s to ISSE directory."
+                            if is_valid_ext(f_name, cfg, log):
+                                log.log_info("Copy file: %s to ISSE directory."
                                              % (f_name))
 
                                 gen_libs.cp_file2(os.path.basename(f_name),
@@ -410,17 +410,17 @@ def process_msg(RQ, LOG, cfg, method, body, **kwargs):
                                                   cfg.isse_dir)
 
                         else:
-                            non_proc_msg(RQ, LOG, cfg, line,
+                            non_proc_msg(rq, log, cfg, line,
                                          "File does not meet file criteria")
 
                 else:
-                    non_proc_msg(RQ, LOG, cfg, line, "File not found")
+                    non_proc_msg(rq, log, cfg, line, "File not found")
 
             else:
-                non_proc_msg(RQ, LOG, cfg, line, "Invalid message format")
+                non_proc_msg(rq, log, cfg, line, "Invalid message format")
 
         else:
-            non_proc_msg(RQ, LOG, cfg, line, "Reached max resends")
+            non_proc_msg(rq, log, cfg, line, "Reached max resends")
 
 
 def monitor_queue(cfg, log, **kwargs):
