@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [1.0.0] - 2019-09-27
+- General release.
+
+### Changed
+- Documentation updates.
+
+
 ## [0.3.6] - 2018-11-26
 ### Changed
 - daemon_rmq_2_isse.main:  Replaced backslash (/) with parenthesis "()" for easier use of print.
