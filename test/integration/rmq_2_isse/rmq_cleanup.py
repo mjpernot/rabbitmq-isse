@@ -64,50 +64,8 @@ def rmq_cleanup(cfg, queue_name, drop_exch=False):
                 try:
                     rq.channel.exchange_declare(exchange=rq.exchange,
                                                 passive=True)
-
                     rq.create_queue()
-
-                    try:
-                        rq.channel.queue_declare(queue=rq.queue_name,
-                                                 passive=True)
-
-                        rq.clear_queue()
-                        rq.drop_queue()
-                        print("\t%s queue dropped" % rq.queue_name)
-
-                        if drop_exch:
-                            rq.drop_exchange()
-                            print("\t%s exchange dropped" % cfg.exchange_name)
-
-                        rq.close_channel()
-
-                        if rq.channel.is_closed:
-
-                            if connect_status \
-                                    and rq.connection._impl.connection_state \
-                                    > 0:
-
-                                rq.close()
-
-                                if rq.connection._impl.connection_state == 0:
-                                    print("\tRabbitMQ connection closed")
-
-                                else:
-                                    print("\tFailed to close connection")
-                                    print("\tConnection: %s" % rq.connection)
-                                    print("\tConnection State: %s" %
-                                          rq.connection._impl.connection_state)
-
-                            else:
-                                print("\tConnection not opened")
-
-                        else:
-                            print("\tFailure:  Channel did not close")
-                            print("\tChannel: %s" % rq.channel)
-
-                    except pika.exceptions.ChannelClosed as msg:
-                        print("\tWarning:  Unable to locate queue")
-                        print("Error Msg: %s" % msg)
+                    _drop_queue(rq, drop_exch, connect_status, cfg)
 
                 except pika.exceptions.ChannelClosed as msg:
                     print("\tWarning:  Unable to find an exchange")
@@ -125,6 +83,59 @@ def rmq_cleanup(cfg, queue_name, drop_exch=False):
     else:
         print("\tFailure:  Unable to initialize")
         print("\tClass: %s" % rabbitmq_class.RabbitMQPub)
+
+
+def _drop_queue(rq, drop_exch, connect_status, cfg):
+
+    """Function:  _drop_queue
+
+    Description:  Private function for rmq_cleanup.
+
+    Arguments:
+        (input) rq -> RabbitMQ instance.
+        (input) drop_exch -> True|False - Drop the exchange.
+        (input) connect_status -> Status of RabbitMQ connection.
+        (input) cfg -> RabbitMQ configuration module handler.
+
+    """
+
+    try:
+        rq.channel.queue_declare(queue=rq.queue_name, passive=True)
+
+        rq.clear_queue()
+        rq.drop_queue()
+        print("\t%s queue dropped" % rq.queue_name)
+
+        if drop_exch:
+            rq.drop_exchange()
+            print("\t%s exchange dropped" % cfg.exchange_name)
+
+        rq.close_channel()
+
+        if rq.channel.is_closed:
+
+            if connect_status and rq.connection._impl.connection_state > 0:
+                rq.close()
+
+                if rq.connection._impl.connection_state == 0:
+                    print("\tRabbitMQ connection closed")
+
+                else:
+                    print("\tFailed to close connection")
+                    print("\tConnection: %s" % rq.connection)
+                    print("\tConnection State: %s" %
+                          rq.connection._impl.connection_state)
+
+            else:
+                print("\tConnection not opened")
+
+        else:
+            print("\tFailure:  Channel did not close")
+            print("\tChannel: %s" % rq.channel)
+
+    except pika.exceptions.ChannelClosed as msg:
+        print("\tWarning:  Unable to locate queue")
+        print("Error Msg: %s" % msg)
 
 
 def main():
