@@ -494,21 +494,21 @@ def run_program(args_array, func_dict, **kwargs):
     cfg, status_flag = validate_create_settings(cfg)
 
     if status_flag:
-        LOG = gen_class.Logger(cfg.log_file, cfg.log_file, "INFO",
+        log = gen_class.Logger(cfg.log_file, cfg.log_file, "INFO",
                                "%(asctime)s %(levelname)s %(message)s",
                                "%Y-%m-%dT%H:%M:%SZ")
         str_val = "=" * 80
-        LOG.log_info("%s:%s Initialized" % (cfg.host, cfg.exchange_name))
-        LOG.log_info("%s" % (str_val))
-        LOG.log_info("Exchange Name:  %s" % (cfg.exchange_name))
-        LOG.log_info("Queue Name:  %s" % (cfg.queue_name))
-        LOG.log_info("To Email:  %s" % (cfg.to_line))
-        LOG.log_info("Transfer Directory:  %s" % (cfg.transfer_dir))
-        LOG.log_info("ISSE Review Directory:  %s" % (cfg.isse_dir))
-        LOG.log_info("Delta Month:  %s" % (cfg.delta_month))
-        LOG.log_info("Resend:  %s" % (cfg.max_resend))
-        LOG.log_info("File Filter:  %s" % (cfg.file_filter))
-        LOG.log_info("%s" % (str_val))
+        log.log_info("%s:%s Initialized" % (cfg.host, cfg.exchange_name))
+        log.log_info("%s" % (str_val))
+        log.log_info("Exchange Name:  %s" % (cfg.exchange_name))
+        log.log_info("Queue Name:  %s" % (cfg.queue_name))
+        log.log_info("To Email:  %s" % (cfg.to_line))
+        log.log_info("Transfer Directory:  %s" % (cfg.transfer_dir))
+        log.log_info("ISSE Review Directory:  %s" % (cfg.isse_dir))
+        log.log_info("Delta Month:  %s" % (cfg.delta_month))
+        log.log_info("Resend:  %s" % (cfg.max_resend))
+        log.log_info("File Filter:  %s" % (cfg.file_filter))
+        log.log_info("%s" % (str_val))
 
         try:
             flavor_id = cfg.exchange_name + cfg.queue_name
@@ -516,14 +516,14 @@ def run_program(args_array, func_dict, **kwargs):
 
             # Intersect args_array & func_dict to find which functions to call.
             for opt in set(args_array.keys()) & set(func_dict.keys()):
-                func_dict[opt](cfg, LOG, **kwargs)
+                func_dict[opt](cfg, log, **kwargs)
 
             del PROG_LOCK
 
         except gen_class.SingleInstanceException:
-            LOG.log_warn("rmq_2_isse lock in place for: %s" % (flavor_id))
+            log.log_warn("rmq_2_isse lock in place for: %s" % (flavor_id))
 
-        LOG.log_close()
+        log.log_close()
 
     else:
         print("Error:  Problem in configuration file or directory setup.")
