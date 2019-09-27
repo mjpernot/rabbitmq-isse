@@ -207,40 +207,40 @@ def is_valid_msg(line, LOG, **kwargs):
     return status
 
 
-def non_proc_msg(RQ, LOG, cfg, line, subj, **kwargs):
+def non_proc_msg(rq, log, cfg, line, subj, **kwargs):
 
     """Function:  non_proc_msg
 
     Description:  Process non-processed messages.
 
     Arguments:
-        (input) RQ -> RabbitMQ class instance.
-        (input) LOG -> Log class instance.
+        (input) rq -> RabbitMQ class instance.
+        (input) log -> Log class instance.
         (input) cfg -> Configuration settings module for the program.
         (input) line -> Line of message that was not processed.
 
     """
 
-    LOG.log_info("non_proc_msg:  Processing non-processed message...")
+    log.log_info("non_proc_msg:  Processing non-processed message...")
     frm_line = getpass.getuser() + "@" + socket.gethostname()
-    f_name = RQ.exchange + "_" + RQ.queue_name + "_" + gen_libs.get_date() \
+    f_name = rq.exchange + "_" + rq.queue_name + "_" + gen_libs.get_date() \
         + "_" + gen_libs.get_time() + ".txt"
     f_path = os.path.join(cfg.message_dir, f_name)
     subj = "rmq_2_isse: " + subj
 
     if cfg.to_line:
-        LOG.log_info("Sending email to: %s..." % (cfg.to_line))
-        EMAIL = gen_class.Mail(cfg.to_line, subj, frm_line)
-        EMAIL.add_2_msg(line)
-        EMAIL.send_mail()
+        log.log_info("Sending email to: %s..." % (cfg.to_line))
+        email = gen_class.Mail(cfg.to_line, subj, frm_line)
+        email.add_2_msg(line)
+        email.send_mail()
 
     else:
-        LOG.log_warn("No email being sent as TO line is empty.")
+        log.log_warn("No email being sent as TO line is empty.")
 
-    LOG.log_err("Message: %s was not processed due to: %s" % (line, subj))
-    LOG.log_info("Saving message to: %s" % (f_path))
+    log.log_err("Message: %s was not processed due to: %s" % (line, subj))
+    log.log_info("Saving message to: %s" % (f_path))
     gen_libs.write_file(f_path, data="Exchange: %s, Queue: %s"
-                        % (RQ.exchange, RQ.queue_name))
+                        % (rq.exchange, rq.queue_name))
     gen_libs.write_file(f_path, data=line)
 
 
