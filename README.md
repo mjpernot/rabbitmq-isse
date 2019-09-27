@@ -227,66 +227,18 @@ pip install -r requirements-rabbitmq-lib.txt --target rabbit_lib --trusted-host 
 
 ```
 cd {Python_Project}/rabbitmq-isse
-```
-
-
-### Unit:  help_message
-```
+test/unit/rmq_2_isse/process_list.py
 test/unit/rmq_2_isse/help_message.py
-```
-
-### Unit:  validate_create_settings
-```
 test/unit/rmq_2_isse/validate_create_settings.py
-```
-
-### Unit:  is_valid_msg
-```
 test/unit/rmq_2_isse/is_valid_msg.py
-```
-
-### Unit:  non_proc_msg
-```
 test/unit/rmq_2_isse/non_proc_msg.py
-```
-
-### Unit:  find_files
-```
 test/unit/rmq_2_isse/find_files.py
-```
-
-### Unit:  is_valid_ext
-```
 test/unit/rmq_2_isse/is_valid_ext.py
-```
-
-### Unit:  is_valid_name
-```
 test/unit/rmq_2_isse/is_valid_name.py
-```
-
-### Unit:  process_msg
-```
 test/unit/rmq_2_isse/process_msg.py
-```
-
-### Unit:  monitor_queue
-```
 test/unit/rmq_2_isse/monitor_queue.py
-```
-
-### Unit:  callback
-```
 test/unit/rmq_2_isse/callback.py
-```
-
-### Unit:  run_program
-```
 test/unit/rmq_2_isse/run_program.py
-```
-
-### Unit:  main
-```
 test/unit/rmq_2_isse/main.py
 ```
 
@@ -305,10 +257,6 @@ test/unit/rmq_2_isse/code_coverage.sh
 
 ```
 cd {Python_Project}/rabbitmq-isse
-```
-
-### Unit:  main
-```
 test/unit/daemon_rmq_2_isse/main.py
 ```
 
@@ -381,51 +329,14 @@ chmod 600 rabbitmq.py
 
 ```
 cd {Python_Project}/rabbitmq-isse
-```
-
-
-### Integration:  process_msg
-```
 test/integration/rmq_2_isse/process_msg.py
-```
-
-### Integration:  process_msg
-```
 test/integration/rmq_2_isse/process_msg2.py
-```
-
-### Integration:  validate_create_settings
-```
 test/integration/rmq_2_isse/validate_create_settings.py
-```
-
-### Integration:  validate_create_settings
-```
 test/integration/rmq_2_isse/validate_create_settings2.py
-```
-
-### Integration:  non_proc_msg
-```
 test/integration/rmq_2_isse/non_proc_msg.py
-```
-
-### Integration:  find_files
-```
 test/integration/rmq_2_isse/find_files.py
-```
-
-### Integration:  monitor_queue
-```
 test/integration/rmq_2_isse/monitor_queue.py
-```
-
-### Integration:  run_program
-```
 test/integration/rmq_2_isse/run_program.py
-```
-
-### Integration:  main
-```
 test/integration/rmq_2_isse/main.py
 ```
 

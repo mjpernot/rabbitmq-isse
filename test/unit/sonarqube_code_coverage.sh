@@ -8,6 +8,7 @@ coverage erase
 
 echo ""
 echo "Running unit test modules in conjunction with coverage"
+coverage run -a --source=rmq_2_isse test/unit/rmq_2_isse/process_list.py
 coverage run -a --source=rmq_2_isse test/unit/rmq_2_isse/help_message.py
 coverage run -a --source=rmq_2_isse test/unit/rmq_2_isse/non_proc_msg.py
 coverage run -a --source=rmq_2_isse test/unit/rmq_2_isse/monitor_queue.py
