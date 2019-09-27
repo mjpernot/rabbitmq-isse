@@ -550,7 +550,6 @@ def main(**kwargs):
     """
 
     sys.argv = kwargs.get("argv_list", sys.argv)
-
     dir_chk_list = ["-d"]
     func_dict = {"-M": monitor_queue}
     opt_req_list = ["-c", "-d"]
@@ -559,11 +558,10 @@ def main(**kwargs):
     # Process argument list from command line.
     args_array = arg_parser.arg_parse2(sys.argv, opt_val_list)
 
-    if not gen_libs.help_func(args_array, __version__, help_message):
-
-        if not arg_parser.arg_require(args_array, opt_req_list) \
-           and not arg_parser.arg_dir_chk_crt(args_array, dir_chk_list):
-            run_program(args_array, func_dict)
+    if not gen_libs.help_func(args_array, __version__, help_message) \
+       and not arg_parser.arg_require(args_array, opt_req_list) \
+       and not arg_parser.arg_dir_chk_crt(args_array, dir_chk_list):
+        run_program(args_array, func_dict)
 
 
 if __name__ == "__main__":
