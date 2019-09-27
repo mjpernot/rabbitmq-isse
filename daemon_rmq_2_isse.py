@@ -35,7 +35,6 @@ import lib.gen_class as gen_class
 import rmq_2_isse
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -43,13 +42,7 @@ class Rmq2IsseDaemon(gen_class.Daemon):
 
     """Class:  Rmq2IsseDaemon
 
-    Description:
-
-    Super-Class:
-        gen_class.Daemon
-
-    Sub-Classes:
-        None
+    Description:  Daemon class to runn the rmq_2_isse program.
 
     Methods:
         run -> Daemon instance will execute this code when called.
@@ -67,7 +60,6 @@ class Rmq2IsseDaemon(gen_class.Daemon):
             self.argv_list -> List of command line options and values.
 
         Arguments:
-            None
 
         """
 
@@ -101,7 +93,6 @@ def main():
 
     f_name = "rmq2isse_daemon_" + args_array.get("-c", "") + ".pid"
     pid_file = os.path.join(gen_libs.get_base_dir(__file__), "tmp", f_name)
-
     daemon = Rmq2IsseDaemon(pid_file, argv_list=sys.argv)
 
     if not arg_parser.arg_require(args_array, opt_req_list):

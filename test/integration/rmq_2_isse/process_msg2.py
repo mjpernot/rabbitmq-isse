@@ -9,7 +9,6 @@
         test/integration/rmq_2_isse/process_msg2.py
 
     Arguments:
-        None
 
     NOTE:  This test is seperate from the other integration tests for the
         process_msg function due to some type of conflict.  When the
@@ -43,7 +42,6 @@ import lib.gen_libs as gen_libs
 import lib.gen_class as gen_class
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -52,10 +50,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:  None
 
     Methods:
         setUp -> Initialize testing environment.
@@ -71,7 +65,6 @@ class UnitTest(unittest.TestCase):
         Description:  Initialization for integration testing.
 
         Arguments:
-            None
 
         """
 
@@ -94,11 +87,11 @@ class UnitTest(unittest.TestCase):
                               create=True, write=True, read=True)
         self.cfg.proc_file = os.path.join(log_path, self.cfg.proc_file)
 
-        self.LOG = gen_class.Logger(self.cfg.log_file, self.cfg.log_file,
+        self.log = gen_class.Logger(self.cfg.log_file, self.cfg.log_file,
                                     "INFO",
                                     "%(asctime)s %(levelname)s %(message)s",
                                     "%Y-%m-%dT%H:%M:%SZ")
-        self.RQ = rabbitmq_class.RabbitMQCon(self.cfg.user, self.cfg.passwd,
+        self.rq = rabbitmq_class.RabbitMQCon(self.cfg.user, self.cfg.passwd,
                                              self.cfg.host, self.cfg.port,
                                              self.cfg.exchange_name,
                                              self.cfg.exchange_type,
@@ -120,8 +113,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test gen_libs.write_file with write to file.
 
         Arguments:
-            mock_date -> Mock Ref:  rmq_2_isse.datetime.datetime.strftime
-            mock_mail -> Mock Ref:  rmq_2_isse.gen_class.Mail
 
         """
 
@@ -130,10 +121,10 @@ class UnitTest(unittest.TestCase):
         mock_date.datetime.now.return_value = \
             datetime.datetime.strptime("2018-01", "%Y-%m")
 
-        rmq_2_isse.process_msg(self.RQ, self.LOG, self.cfg, self.method,
+        rmq_2_isse.process_msg(self.rq, self.log, self.cfg, self.method,
                                self.body)
 
-        self.LOG.log_close()
+        self.log.log_close()
 
         if self.body in open(self.cfg.proc_file).read():
             status = True
@@ -150,7 +141,6 @@ class UnitTest(unittest.TestCase):
         Description:  Clean up of integration testing.
 
         Arguments:
-            None
 
         """
 

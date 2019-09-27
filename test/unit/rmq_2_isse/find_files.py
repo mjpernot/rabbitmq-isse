@@ -9,7 +9,6 @@
         test/unit/rmq_2_isse/find_files.py
 
     Arguments:
-        None
 
 """
 
@@ -32,7 +31,6 @@ sys.path.append(os.getcwd())
 import rmq_2_isse
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -41,10 +39,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:  None
 
     Methods:
         setUp -> Initialize testing environment.
@@ -63,7 +57,6 @@ class UnitTest(unittest.TestCase):
         Description:  Initialization for unit testing.
 
         Arguments:
-            None
 
         """
 
@@ -72,10 +65,6 @@ class UnitTest(unittest.TestCase):
             """Class:  CfgTest
 
             Description:  Class which is a representation of a cfg module.
-
-            Super-Class:  object
-
-            Sub-Classes:  None
 
             Methods:
                 __init__ -> Initialize configuration environment.
@@ -89,16 +78,15 @@ class UnitTest(unittest.TestCase):
                 Description:  Initialization instance of the CfgTest class.
 
                 Arguments:
-                        None
 
                 """
 
                 self.transfer_dir = "transfer_dir"
                 self.delta_month = 2
 
-        self.CT = CfgTest()
+        self.ct = CfgTest()
 
-        self.file_list = [self.CT.transfer_dir + "/2018/01/File"]
+        self.file_list = [self.ct.transfer_dir + "/2018/01/File"]
         self.empty_file_list = []
 
     @mock.patch("rmq_2_isse.os.path.join")
@@ -111,19 +99,15 @@ class UnitTest(unittest.TestCase):
         Description:  Test find_files function for files in current directory.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_libs -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_join -> Mock Ref:  rmq_2_isse.os.path.join
 
         """
 
-        # Set mock value for all returns.
         mock_log.return_value = True
         mock_libs.dir_file_match.side_effect = [["File"], []]
         mock_libs.month_delta.return_value = (01, 2018)
-        mock_join.return_value = self.CT.transfer_dir + "/2018/01/File"
+        mock_join.return_value = self.ct.transfer_dir + "/2018/01/File"
 
-        self.assertEqual(rmq_2_isse.find_files(mock_log, self.CT, "Line"),
+        self.assertEqual(rmq_2_isse.find_files(mock_log, self.ct, "Line"),
                          self.file_list)
 
     @mock.patch("rmq_2_isse.os.path.join")
@@ -136,19 +120,15 @@ class UnitTest(unittest.TestCase):
         Description:  Test find_files function for files in past directory.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_libs -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_join -> Mock Ref:  rmq_2_isse.os.path.join
 
         """
 
-        # Set mock value for all returns.
         mock_log.return_value = True
         mock_libs.dir_file_match.side_effect = [[], ["File"]]
         mock_libs.month_delta.return_value = (01, 2018)
-        mock_join.return_value = self.CT.transfer_dir + "/2018/01/File"
+        mock_join.return_value = self.ct.transfer_dir + "/2018/01/File"
 
-        self.assertEqual(rmq_2_isse.find_files(mock_log, self.CT, "Line"),
+        self.assertEqual(rmq_2_isse.find_files(mock_log, self.ct, "Line"),
                          self.file_list)
 
     @mock.patch("rmq_2_isse.os.path.join")
@@ -161,19 +141,15 @@ class UnitTest(unittest.TestCase):
         Description:  Test find_files function for files in 2nd past directory.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_libs -> Mock Ref:  rmq_2_isse.gen_libs
-            mock_join -> Mock Ref:  rmq_2_isse.os.path.join
 
         """
 
-        # Set mock value for all returns.
         mock_log.return_value = True
         mock_libs.dir_file_match.side_effect = [[], [], ["File"]]
         mock_libs.month_delta.return_value = (01, 2018)
-        mock_join.return_value = self.CT.transfer_dir + "/2018/01/File"
+        mock_join.return_value = self.ct.transfer_dir + "/2018/01/File"
 
-        self.assertEqual(rmq_2_isse.find_files(mock_log, self.CT, "Line"),
+        self.assertEqual(rmq_2_isse.find_files(mock_log, self.ct, "Line"),
                          self.file_list)
 
     @mock.patch("rmq_2_isse.gen_libs")
@@ -185,17 +161,14 @@ class UnitTest(unittest.TestCase):
         Description:  Test find_files function for no file found.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_libs -> Mock Ref:  rmq_2_isse.gen_libs
 
         """
 
-        # Set mock value for all returns.
         mock_log.return_value = True
         mock_libs.dir_file_match.side_effect = [[], [], []]
         mock_libs.month_delta.return_value = (01, 2018)
 
-        self.assertEqual(rmq_2_isse.find_files(mock_log, self.CT, "Line"),
+        self.assertEqual(rmq_2_isse.find_files(mock_log, self.ct, "Line"),
                          self.empty_file_list)
 
     def tearDown(self):
@@ -205,11 +178,10 @@ class UnitTest(unittest.TestCase):
         Description:  Clean up of unit testing.
 
         Arguments:
-            None
 
         """
 
-        self.CT = None
+        self.ct = None
 
 
 if __name__ == "__main__":

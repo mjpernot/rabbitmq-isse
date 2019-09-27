@@ -9,7 +9,6 @@
         test/unit/daemon_rmq_2_isse/main.py
 
     Arguments:
-        None
 
 """
 
@@ -33,7 +32,6 @@ import daemon_rmq_2_isse
 import lib.gen_libs as gen_libs
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -42,10 +40,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:  None
 
     Methods:
         test_start_daemon -> Test main function with daemon start option.
@@ -66,8 +60,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test main function with daemon start option.
 
         Arguments:
-            mock_daemon -> Mock Ref:  daemon_rmq_2_isse.Rmq2IsseDaemon
-            mock_arg -> Mock Ref:  daemon_rmq_2_isse.arg_parser
 
         """
 
@@ -88,8 +80,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test main function with daemon stop option.
 
         Arguments:
-            mock_daemon -> Mock Ref:  daemon_rmq_2_isse.Rmq2IsseDaemon
-            mock_arg -> Mock Ref:  daemon_rmq_2_isse.arg_parser
 
         """
 
@@ -110,8 +100,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test main function with daemon restart option.
 
         Arguments:
-            mock_daemon -> Mock Ref:  daemon_rmq_2_isse.Rmq2IsseDaemon
-            mock_arg -> Mock Ref:  daemon_rmq_2_isse.arg_parser
 
         """
 
@@ -131,7 +119,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test main function with invalid option.
 
         Arguments:
-            mock_arg -> Mock Ref:  daemon_rmq_2_isse.arg_parser
 
         """
 
@@ -152,8 +139,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test main function with arg_require false.
 
         Arguments:
-            mock_daemon -> Mock Ref:  daemon_rmq_2_isse.Rmq2IsseDaemon
-            mock_arg -> Mock Ref:  daemon_rmq_2_isse.arg_parser
 
         """
 
@@ -173,7 +158,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test main function with arg_require true.
 
         Arguments:
-            mock_arg -> Mock Ref:  daemon_rmq_2_isse.arg_parser
 
         """
 

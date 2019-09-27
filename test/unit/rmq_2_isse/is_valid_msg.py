@@ -9,7 +9,6 @@
         test/unit/rmq_2_isse/is_valid_msg.py
 
     Arguments:
-        None
 
 """
 
@@ -32,7 +31,6 @@ sys.path.append(os.getcwd())
 import rmq_2_isse
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -41,10 +39,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:  None
 
     Methods:
         test_valid_line -> Test a valid line.
@@ -61,7 +55,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test is_valid_msg function for one entry in line.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
 
         """
 
@@ -77,7 +70,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test is_valid_msg function for empty line.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
 
         """
 
@@ -93,7 +85,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test is_valid_msg function for multiple entries in line.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
 
         """
 
