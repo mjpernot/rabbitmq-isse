@@ -11,7 +11,8 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - run_program:  Fixed problem with mutable default arguments issue.
 
 ### Changed
-- main:  Changed variables to standard naming convention.
+- monitor_queue:  Changed variables to standard naming convention.
+- run_program:  Changed variables to standard naming convention.
 - main:  Refactored "if" statements.
 - Documentation updates.
 
