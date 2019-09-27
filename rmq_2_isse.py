@@ -301,7 +301,7 @@ def find_files(LOG, cfg, line, **kwargs):
     return file_list
 
 
-def is_valid_ext(f_name, cfg, LOG, **kwargs):
+def is_valid_ext(f_name, cfg, log, **kwargs):
 
     """Function:  is_valid_ext
 
@@ -311,17 +311,17 @@ def is_valid_ext(f_name, cfg, LOG, **kwargs):
     Arguments:
         (input) f_name -> File name.
         (input) cfg -> Configuration settings module for the program.
-        (input) LOG -> Log class instance.
+        (input) log -> Log class instance.
         (output) Status -> True|False - File extension is valid.
 
     """
 
-    LOG.log_info("is_valid_ext:  Validating file extension...")
+    log.log_info("is_valid_ext:  Validating file extension...")
     status = True
 
     for ext in cfg.ignore_ext:
         if ext in f_name:
-            LOG.log_warn("File extension invalid for: %s" % (f_name))
+            log.log_warn("File extension invalid for: %s" % (f_name))
             status = False
             break
 
