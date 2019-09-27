@@ -9,7 +9,6 @@
         test/unit/rmq_2_isse/callback.py
 
     Arguments:
-        None
 
 """
 
@@ -32,7 +31,6 @@ sys.path.append(os.getcwd())
 import rmq_2_isse
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -41,10 +39,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:  None
 
     Methods:
         setUp -> Initialize testing environment.
@@ -60,7 +54,6 @@ class UnitTest(unittest.TestCase):
         Description:  Initialization for unit testing.
 
         Arguments:
-            None
 
         """
 
@@ -69,10 +62,6 @@ class UnitTest(unittest.TestCase):
             """Class:  CfgTest
 
             Description:  Class which is a representation of a cfg module.
-
-            Super-Class:  object
-
-            Sub-Classes:  None
 
             Methods:
                 __init__ -> Initialize configuration environment.
@@ -86,13 +75,12 @@ class UnitTest(unittest.TestCase):
                 Description:  Initialization instance of the CfgTest class.
 
                 Arguments:
-                        None
 
                 """
 
                 pass
 
-        self.CT = CfgTest()
+        self.ct = CfgTest()
 
     @mock.patch("rmq_2_isse.rabbitmq_class.RabbitMQCon.ack")
     @mock.patch("rmq_2_isse.process_msg")
@@ -105,20 +93,15 @@ class UnitTest(unittest.TestCase):
         Description:  Test callback function.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_monitor -> Mock Ref:  rmq_2_isse.monitor_queue
-            mock_msg -> Mock Ref:  rmq_2_isse.process_msg
-            mock_ack -> Mock Ref:  rmq_2_isse.rabbitmq_class.RabbitMQCon.ack
 
         """
 
-        # Set mock values.
         mock_log.return_value = True
         mock_msg.return_value = True
         mock_monitor.return_value.callback.return_value = True
         mock_ack.return_value = True
 
-        self.assertTrue(rmq_2_isse.monitor_queue(self.CT, mock_log).
+        self.assertTrue(rmq_2_isse.monitor_queue(self.ct, mock_log).
                         callback("Channel", "Method", "Props", "Body"))
 
     def tearDown(self):
@@ -128,11 +111,10 @@ class UnitTest(unittest.TestCase):
         Description:  Clean up of unit testing.
 
         Arguments:
-            None
 
         """
 
-        self.CT = None
+        self.ct = None
 
 
 if __name__ == "__main__":
