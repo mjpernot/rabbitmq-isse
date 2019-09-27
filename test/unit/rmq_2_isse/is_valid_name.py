@@ -9,7 +9,6 @@
         test/unit/rmq_2_isse/is_valid_name.py
 
     Arguments:
-        None
 
 """
 
@@ -32,7 +31,6 @@ sys.path.append(os.getcwd())
 import rmq_2_isse
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -41,10 +39,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:  None
 
     Methods:
         setUp -> Initialize testing environment.
@@ -62,7 +56,6 @@ class UnitTest(unittest.TestCase):
         Description:  Initialization for unit testing.
 
         Arguments:
-            None
 
         """
 
@@ -71,10 +64,6 @@ class UnitTest(unittest.TestCase):
             """Class:  CfgTest
 
             Description:  Class which is a representation of a cfg module.
-
-            Super-Class:  object
-
-            Sub-Classes:  None
 
             Methods:
                 __init__ -> Initialize configuration environment.
@@ -88,13 +77,12 @@ class UnitTest(unittest.TestCase):
                 Description:  Initialization instance of the CfgTest class.
 
                 Arguments:
-                        None
 
                 """
 
                 self.file_filter = ["SCI-CW", "GEN-CW", "GEN-RELN"]
 
-        self.CT = CfgTest()
+        self.ct = CfgTest()
 
         self.fname = "File_Name.txt"
 
@@ -106,15 +94,14 @@ class UnitTest(unittest.TestCase):
         Description:  Test is_valid_name function with empty list.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
 
         """
 
         mock_log.return_value = True
 
-        self.CT.file_filter = []
+        self.ct.file_filter = []
 
-        self.assertTrue(rmq_2_isse.is_valid_name(self.fname, self.CT,
+        self.assertTrue(rmq_2_isse.is_valid_name(self.fname, self.ct,
                                                  mock_log))
 
     @mock.patch("rmq_2_isse.gen_class.Logger")
@@ -125,13 +112,12 @@ class UnitTest(unittest.TestCase):
         Description:  Test is_valid_name function with not found in list.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
 
         """
 
         mock_log.return_value = True
 
-        self.assertFalse(rmq_2_isse.is_valid_name(self.fname, self.CT,
+        self.assertFalse(rmq_2_isse.is_valid_name(self.fname, self.ct,
                                                   mock_log))
 
     @mock.patch("rmq_2_isse.gen_class.Logger")
@@ -142,7 +128,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test is_valid_name function with one find in list.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
 
         """
 
@@ -151,7 +136,7 @@ class UnitTest(unittest.TestCase):
         self.fname = "File_Name_SCI-CW.txt"
 
         self.assertTrue(rmq_2_isse.is_valid_name(self.fname,
-                                                 self.CT, mock_log))
+                                                 self.ct, mock_log))
 
     def tearDown(self):
 
@@ -160,11 +145,10 @@ class UnitTest(unittest.TestCase):
         Description:  Clean up of unit testing.
 
         Arguments:
-            None
 
         """
 
-        self.CT = None
+        self.ct = None
 
 
 if __name__ == "__main__":

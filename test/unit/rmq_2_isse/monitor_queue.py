@@ -9,7 +9,6 @@
         test/unit/rmq_2_isse/monitor_queue.py
 
     Arguments:
-        None
 
 """
 
@@ -32,7 +31,6 @@ sys.path.append(os.getcwd())
 import rmq_2_isse
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -41,10 +39,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:  None
 
     Methods:
         setUp -> Initialize testing environment.
@@ -64,7 +58,6 @@ class UnitTest(unittest.TestCase):
         Description:  Initialization for unit testing.
 
         Arguments:
-            None
 
         """
 
@@ -73,10 +66,6 @@ class UnitTest(unittest.TestCase):
             """Class:  CfgTest
 
             Description:  Class which is a representation of a cfg module.
-
-            Super-Class:  object
-
-            Sub-Classes:  None
 
             Methods:
                 __init__ -> Initialize configuration environment.
@@ -90,7 +79,6 @@ class UnitTest(unittest.TestCase):
                 Description:  Initialization instance of the CfgTest class.
 
                 Arguments:
-                        None
 
                 """
 
@@ -105,7 +93,7 @@ class UnitTest(unittest.TestCase):
                 self.q_durable = True
                 self.auto_delete = False
 
-        self.CT = CfgTest()
+        self.ct = CfgTest()
 
     @mock.patch("rmq_2_isse.rabbitmq_class.RabbitMQCon")
     @mock.patch("rmq_2_isse.gen_class.Logger")
@@ -117,8 +105,6 @@ class UnitTest(unittest.TestCase):
             message.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_rq -> Mock Ref:  rmq_2_isse.rabbitmq_class.RabbitMQCon
 
         """
 
@@ -126,7 +112,7 @@ class UnitTest(unittest.TestCase):
         mock_rq.return_value = rmq_2_isse.rabbitmq_class.RabbitMQCon
         mock_rq.create_connection.return_value = (False, "Error_Message")
 
-        self.assertFalse(rmq_2_isse.monitor_queue(self.CT, mock_log))
+        self.assertFalse(rmq_2_isse.monitor_queue(self.ct, mock_log))
 
     @mock.patch("rmq_2_isse.rabbitmq_class.RabbitMQCon")
     @mock.patch("rmq_2_isse.gen_class.Logger")
@@ -138,8 +124,6 @@ class UnitTest(unittest.TestCase):
             channel is False.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_rq -> Mock Ref:  rmq_2_isse.rabbitmq_class.RabbitMQCon
 
         """
 
@@ -148,7 +132,7 @@ class UnitTest(unittest.TestCase):
         mock_rq.create_connection.return_value = (False, "Error_Message")
         mock_rq.channel.is_open = False
 
-        self.assertFalse(rmq_2_isse.monitor_queue(self.CT, mock_log))
+        self.assertFalse(rmq_2_isse.monitor_queue(self.ct, mock_log))
 
     @mock.patch("rmq_2_isse.rabbitmq_class.RabbitMQCon")
     @mock.patch("rmq_2_isse.gen_class.Logger")
@@ -160,8 +144,6 @@ class UnitTest(unittest.TestCase):
             channel is False.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_rq -> Mock Ref:  rmq_2_isse.rabbitmq_class.RabbitMQCon
 
         """
 
@@ -170,7 +152,7 @@ class UnitTest(unittest.TestCase):
         mock_rq.create_connection.return_value = (True, "Error_Message")
         mock_rq.channel.is_open = False
 
-        self.assertFalse(rmq_2_isse.monitor_queue(self.CT, mock_log))
+        self.assertFalse(rmq_2_isse.monitor_queue(self.ct, mock_log))
 
     @mock.patch("rmq_2_isse.rabbitmq_class.RabbitMQCon")
     @mock.patch("rmq_2_isse.gen_class.Logger")
@@ -182,8 +164,6 @@ class UnitTest(unittest.TestCase):
             channel is True.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_rq -> Mock Ref:  rmq_2_isse.rabbitmq_class.RabbitMQCon
 
         """
 
@@ -192,7 +172,7 @@ class UnitTest(unittest.TestCase):
         mock_rq.create_connection.return_value = (False, "Error_Message")
         mock_rq.channel.is_open = True
 
-        self.assertFalse(rmq_2_isse.monitor_queue(self.CT, mock_log))
+        self.assertFalse(rmq_2_isse.monitor_queue(self.ct, mock_log))
 
     @mock.patch("rmq_2_isse.rabbitmq_class.RabbitMQCon")
     @mock.patch("rmq_2_isse.gen_class.Logger")
@@ -204,8 +184,6 @@ class UnitTest(unittest.TestCase):
             channel is True.
 
         Arguments:
-            mock_log -> Mock Ref:  rmq_2_isse.gen_class.Logger
-            mock_rq -> Mock Ref:  rmq_2_isse.rabbitmq_class.RabbitMQCon
 
         """
 
@@ -216,7 +194,7 @@ class UnitTest(unittest.TestCase):
         mock_rq.consume.return_value = "RabbitMQ_Tag"
         mock_rq.start_loop.return_value = True
 
-        self.assertFalse(rmq_2_isse.monitor_queue(self.CT, mock_log))
+        self.assertFalse(rmq_2_isse.monitor_queue(self.ct, mock_log))
 
     def tearDown(self):
 
@@ -225,11 +203,10 @@ class UnitTest(unittest.TestCase):
         Description:  Clean up of unit testing.
 
         Arguments:
-            None
 
         """
 
-        self.CT = None
+        self.ct = None
 
 
 if __name__ == "__main__":

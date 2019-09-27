@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [1.0.0] - 2019-09-27
+- General release.
+
+### Fixed
+- run_program:  Fixed problem with mutable default arguments issue.
+
+### Changed
+- process_msg:  Added call to \_process_list function.
+- is_valid_msg:  Changed variable to standard naming convention.
+- non_proc_msg:  Changed variables to standard naming convention.
+- find_files:  Changed variable to standard naming convention.
+- is_valid_ext:  Changed variable to standard naming convention.
+- is_valid_name:  Changed variable to standard naming convention.
+- process_msg:  Changed variables to standard naming convention.
+- monitor_queue:  Changed variables to standard naming convention.
+- run_program:  Changed variables to standard naming convention.
+- main:  Refactored "if" statements.
+- Documentation updates.
+
+### Added
+- \_process_list:  Process list of files for the message queue.
+
+
 ## [0.3.6] - 2018-11-26
 ### Changed
 - daemon_rmq_2_isse.main:  Replaced backslash (/) with parenthesis "()" for easier use of print.
@@ -11,7 +34,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - non_proc_msg:  Removed "create_body" call as it is done internally in the class.
 
 ### Fixed
-- non_proc_msg:  Changed "*kwargs" to "**kwargs".
+- non_proc_msg:  Changed "\*kwargs" to "\*\*kwargs".
 
 
 ## [0.3.5] - 2018-05-21

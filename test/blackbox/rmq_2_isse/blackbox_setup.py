@@ -7,7 +7,7 @@
 
     Usage:  blackbox_setup.py
 
-    Arguments:  None
+    Arguments:
 
 """
 
@@ -25,7 +25,6 @@ sys.path.append(os.getcwd())
 import lib.gen_libs as gen_libs
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -62,7 +61,6 @@ def main():
         base_dir -> Base directory path to testing directory.
 
     Arguments:
-        None
 
     """
 

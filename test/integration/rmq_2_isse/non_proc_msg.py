@@ -9,7 +9,6 @@
         test/integration/rmq_2_isse/non_proc_msg.py
 
     Arguments:
-        None
 
 """
 
@@ -35,7 +34,6 @@ import lib.gen_libs as gen_libs
 import lib.gen_class as gen_class
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -44,10 +42,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:  None
 
     Methods:
         setUp -> Initialize testing environment.
@@ -63,32 +57,26 @@ class UnitTest(unittest.TestCase):
         Description:  Initialization for integration testing.
 
         Arguments:
-            None
 
         """
 
         self.base_dir = "test/integration/rmq_2_isse"
         self.test_path = os.path.join(os.getcwd(), self.base_dir)
         self.config_path = os.path.join(self.test_path, "config")
-
         self.cfg = gen_libs.load_module("rabbitmq", self.config_path)
-
         log_path = os.path.join(self.test_path, self.cfg.log_dir)
         self.cfg.log_file = os.path.join(log_path, self.cfg.log_file)
-
         self.cfg.transfer_dir = os.path.join(self.test_path,
                                              self.cfg.transfer_dir)
         self.cfg.message_dir = os.path.join(self.test_path,
                                             self.cfg.message_dir)
         self.cfg.isse_dir = os.path.join(self.test_path, self.cfg.isse_dir)
-
         self.cfg.proc_file = os.path.join(log_path, self.cfg.proc_file)
-
-        self.LOG = gen_class.Logger(self.cfg.log_file, self.cfg.log_file,
+        self.log = gen_class.Logger(self.cfg.log_file, self.cfg.log_file,
                                     "INFO",
                                     "%(asctime)s %(levelname)s %(message)s",
                                     "%Y-%m-%dT%H:%M:%SZ")
-        self.RQ = rabbitmq_class.RabbitMQCon(self.cfg.user, self.cfg.passwd,
+        self.rq = rabbitmq_class.RabbitMQCon(self.cfg.user, self.cfg.passwd,
                                              self.cfg.host, self.cfg.port,
                                              self.cfg.exchange_name,
                                              self.cfg.exchange_type,
@@ -103,7 +91,7 @@ class UnitTest(unittest.TestCase):
         self.test_date = "2018-01-01"
         self.test_time = "10:00:00"
 
-        self.test_file = self.RQ.exchange + "_" + self.RQ.queue_name + "_" \
+        self.test_file = self.rq.exchange + "_" + self.rq.queue_name + "_" \
             + self.test_date + "_" + self.test_time + ".txt"
 
     @mock.patch("rmq_2_isse.gen_class.Mail")
@@ -116,9 +104,6 @@ class UnitTest(unittest.TestCase):
         Description:  Test of gen_libs.write_file call.
 
         Arguments:
-            mock_date -> Mock Ref:  rmq_2_isse.gen_libs.get_date
-            mock_time -> Mock Ref:  rmq_2_isse.gen_libs.get_time
-            mock_mail -> Mock Ref:  rmq_2_isse.gen_class.Mail
 
         """
 
@@ -126,10 +111,10 @@ class UnitTest(unittest.TestCase):
         mock_time.return_value = self.test_time
         mock_mail.send_mail.return_value = True
 
-        rmq_2_isse.non_proc_msg(self.RQ, self.LOG, self.cfg, self.line,
+        rmq_2_isse.non_proc_msg(self.rq, self.log, self.cfg, self.line,
                                 self.subj)
 
-        self.LOG.log_close()
+        self.log.log_close()
 
         if self.line in open(os.path.join(self.cfg.message_dir,
                                           self.test_file)).read():
@@ -147,7 +132,6 @@ class UnitTest(unittest.TestCase):
         Description:  Clean up of integration testing.
 
         Arguments:
-            None
 
         """
 

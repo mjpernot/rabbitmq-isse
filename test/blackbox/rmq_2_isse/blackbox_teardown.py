@@ -7,7 +7,7 @@
 
     Usage:  blackbox_teardown.py
 
-    Arguments:  None
+    Arguments:
 
 """
 
@@ -25,7 +25,6 @@ import glob
 sys.path.append(os.getcwd())
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -57,7 +56,6 @@ def main():
         base_dir -> Base directory path to testing directory.
 
     Arguments:
-        None
 
     """
 
