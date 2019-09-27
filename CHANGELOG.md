@@ -11,6 +11,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - run_program:  Fixed problem with mutable default arguments issue.
 
 ### Changed
+- process_msg:  Added call to \_process_list function.
 - is_valid_msg:  Changed variable to standard naming convention.
 - non_proc_msg:  Changed variables to standard naming convention.
 - find_files:  Changed variable to standard naming convention.
@@ -21,6 +22,9 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - run_program:  Changed variables to standard naming convention.
 - main:  Refactored "if" statements.
 - Documentation updates.
+
+### Added
+- \_process_list:  Process list of files for the message queue.
 
 
 ## [0.3.6] - 2018-11-26
