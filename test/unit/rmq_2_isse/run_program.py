@@ -125,6 +125,31 @@ class UnitTest(unittest.TestCase):
         self.args = {"-c": "config_file", "-d": "config_dir", "-M": True}
         self.func_dict = {"-M": monitor_queue}
 
+    @mock.patch("rmq_2_isse.validate_create_settings")
+    @mock.patch("rmq_2_isse.gen_libs.load_module")
+    @mock.patch("rmq_2_isse.gen_class.Logger")
+    @mock.patch("rmq_2_isse.gen_class.ProgramLock")
+    def test_exception_handler(self, mock_lock, mock_log, mock_load,
+                               mock_valid):
+
+        """Function:  test_exception_handler
+
+        Description:  Test with exception handler.
+
+        Arguments:
+
+        """
+
+        mock_lock.side_effect = rmq_2_isse.gen_class.SingleInstanceException
+        mock_log.return_value = rmq_2_isse.gen_class.Logger
+        mock_load = self.CT
+        mock_valid.return_value = (self.CT, True)
+        mock_log.log_close.return_value = True
+        mock_log = rmq_2_isse.gen_class.ProgramLock
+
+        with gen_libs.no_std_out():
+            self.assertFalse(rmq_2_isse.main())
+
     @mock.patch("rmq_2_isse.monitor_queue")
     @mock.patch("rmq_2_isse.validate_create_settings")
     @mock.patch("rmq_2_isse.gen_libs.load_module")
