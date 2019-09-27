@@ -512,13 +512,13 @@ def run_program(args_array, func_dict, **kwargs):
 
         try:
             flavor_id = cfg.exchange_name + cfg.queue_name
-            PROG_LOCK = gen_class.ProgramLock(sys.argv, flavor_id)
+            prog_lock = gen_class.ProgramLock(sys.argv, flavor_id)
 
             # Intersect args_array & func_dict to find which functions to call.
             for opt in set(args_array.keys()) & set(func_dict.keys()):
                 func_dict[opt](cfg, log, **kwargs)
 
-            del PROG_LOCK
+            del prog_lock
 
         except gen_class.SingleInstanceException:
             log.log_warn("rmq_2_isse lock in place for: %s" % (flavor_id))
