@@ -168,7 +168,7 @@ class UnitTest(unittest.TestCase):
 
         mock_lock.side_effect = rmq_2_isse.gen_class.SingleInstanceException
         mock_log.return_value = rmq_2_isse.gen_class.Logger
-        mock_load = self.ct
+        mock_load.return_value = self.ct
         mock_valid.return_value = (self.ct, True)
         mock_log.log_close.return_value = True
         mock_log = rmq_2_isse.gen_class.ProgramLock
@@ -190,7 +190,7 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_class.Logger.return_value = rmq_2_isse.gen_class.Logger
-        mock_load = self.ct
+        mock_load.return_value = self.ct
         mock_valid.return_value = (self.ct, True)
         mock_class.Logger.log_close.return_value = True
         mock_class.ProgramLock = rmq_2_isse.gen_class.ProgramLock
@@ -214,7 +214,7 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_class.Logger.return_value = rmq_2_isse.gen_class.Logger
-        mock_load = self.ct
+        mock_load.return_value = self.ct
         mock_valid.return_value = (self.ct, True)
         mock_class.Logger.log_close.return_value = True
         mock_class.ProgramLock = rmq_2_isse.gen_class.ProgramLock
@@ -236,7 +236,7 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_log.return_value = True
-        mock_load = self.ct
+        mock_load.return_value = self.ct
         mock_valid.return_value = (self.ct, False)
 
         with gen_libs.no_std_out():
@@ -256,7 +256,7 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_log.return_value = rmq_2_isse.gen_class.Logger
-        mock_load = self.ct
+        mock_load.return_value = self.ct
         mock_valid.return_value = (self.ct, True)
         mock_log.log_close.return_value = True
 
